@@ -8,7 +8,7 @@ import f3 from '../assets/f3.jpg'
 
 const OurPortfolio = () => {
   return (
-    <div className='px-56 mt-8'>
+    <div className='px-56 py-10'>
             <p className='text-xl font-semibold mb-3'>Our Portfolio</p>
             <div className='grid gap-3 grid-cols-3'>
                 <img className='w-5xl h-86 object-fill rounded-sm' src={f1} alt='' />
