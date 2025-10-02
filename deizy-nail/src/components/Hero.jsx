@@ -46,7 +46,7 @@ const Hero = () => {
             Welcome to our nail studio where creativity and precision meet. Let
             us pamper you with the finest nail care services
           </p>
-          <button className="px-2.5 py-1.5 sm:px-4 sm:py-2 bg-pink-500 text-white text-sm sm:text-base rounded-md mt-6 hover:bg-pink-600 transition">
+          <button className="px-4 flex items-center py-1.5 sm:px-4 sm:py-2 bg-pink-500 font-semibold text-white text-sm sm:text-base rounded-md mt-6 hover:bg-pink-600 transition">
                 Book Appointment
         </button>
         </div>
