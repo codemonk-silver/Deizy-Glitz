@@ -11,7 +11,7 @@ const Footer = () => {
           
           {/* Brand */}
           <div className="flex flex-col md:w-1/3">
-            <p className="text-2xl font-semibold mb-2">
+            <p className="text-xl font-semibold mb-2">
               Deizy Glitz
             </p>
             <p className="text-gray-700">
@@ -22,7 +22,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="flex flex-col md:w-1/3">
-            <p className="text-2xl font-semibold mb-2">
+            <p className="text-xl font-semibold mb-2">
               Quick Links
             </p>
             <div className="flex flex-col space-y-1">
@@ -35,7 +35,7 @@ const Footer = () => {
 
           {/* Connect */}
           <div className="flex flex-col md:w-1/3">
-            <p className="text-2xl font-semibold mb-2">
+            <p className="text-xl font-semibold mb-2">
               Connect
             </p>
             <div className="flex gap-4 mt-2">

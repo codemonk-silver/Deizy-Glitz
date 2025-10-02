@@ -39,16 +39,16 @@ const Hero = () => {
 
         {/* Overlay Content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-          <h1 className="text-xl md:text-3xl lg:text-4xl font-bold text-white mb-3">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3">
             Experience The Art Of Beautiful Nails
           </h1>
           <p className="text-white max-w-2xl text-sm md:text-base">
             Welcome to our nail studio where creativity and precision meet. Let
             us pamper you with the finest nail care services
           </p>
-          <button className="px-4 py-2 bg-pink-500 text-white rounded-lg mt-6 hover:bg-pink-600 transition">
-            Book Appointment
-          </button>
+          <button className="px-2.5 py-1.5 sm:px-4 sm:py-2 bg-pink-500 text-white text-sm sm:text-base rounded-md mt-6 hover:bg-pink-600 transition">
+                Book Appointment
+        </button>
         </div>
       </div>
 

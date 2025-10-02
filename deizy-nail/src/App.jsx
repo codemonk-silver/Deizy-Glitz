@@ -6,6 +6,8 @@ import About from '../src/pages/About'
 import Contact from '../src/pages/Contact'
 import Service from '../src/pages/Service'
 import Navbar from '../src/components/Navbar'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const App = () => {
   return (

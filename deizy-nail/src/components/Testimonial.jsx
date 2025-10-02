@@ -1,8 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
 import { FaStar, FaChevronLeft, FaChevronRight } from "react-icons/fa"; 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+
 
 // Custom Next Arrow
 const NextArrow = ({ onClick }) => {
@@ -29,6 +28,8 @@ const PrevArrow = ({ onClick }) => {
 };
 
 const Testimonial = () => {
+  
+
   const testimonials = [
     {
       id: 1,
@@ -105,6 +106,7 @@ const Testimonial = () => {
       <p className="text-2xl font-semibold text-center mb-6">
         What Our Clients Say
       </p>
+      <div className="w-full overflow-hidden">
       <Slider {...settings}>
         {testimonials.map((item) => (
           <div key={item.id} className="px-4"> {/* 👈 spacing between slides */}
@@ -133,6 +135,7 @@ const Testimonial = () => {
           </div>
         ))}
       </Slider>
+      </div>
     </div>
   );
 };
