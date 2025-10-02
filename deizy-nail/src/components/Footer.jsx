@@ -14,7 +14,7 @@ const Footer = () => {
             </div>
             <div className='flex flex-col'>
                 <p className='font-bold text-2xl'>
-                    Quick Links
+                    Quick Link
                 </p>
                 <div className='flex flex-col'>
                     
