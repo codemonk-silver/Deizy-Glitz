@@ -8,16 +8,20 @@ import f3 from '../assets/f3.jpg'
 
 const OurPortfolio = () => {
   return (
-    <div className='px-56 py-10'>
-            <p className='text-xl font-semibold mb-3'>Our Portfolio</p>
-            <div className='grid gap-3 grid-cols-3'>
-                <img className='w-5xl h-86 object-fill rounded-sm' src={f1} alt='' />
-                <img className='w-5xl h-86 object-fill rounded-sm' src={tb} alt='' />
-                <img className='w-5xl h-86 object-fill rounded-sm' src={f2} alt='' />
-                <img className='w-5xl h-86 object-fill rounded-sm' src={ta} alt='' />
-                <img className='w-5xl h-86 object-fill rounded-sm' src={tc} alt='' />
-                <img className='w-5xl h-86 object-fill rounded-sm' src={f3} alt='' />
-            </div>
+    <div className="px-6 md:px-12 lg:px-56 py-10">
+      <p className="text-lg md:text-xl font-semibold mb-4 text-center md:text-left">
+        Our Portfolio
+      </p>
+
+      {/* Responsive Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <img className="w-full h-52 sm:h-64 lg:h-80 object-cover rounded-md" src={f1} alt="" />
+        <img className="w-full h-52 sm:h-64 lg:h-80 object-cover rounded-md" src={tb} alt="" />
+        <img className="w-full h-52 sm:h-64 lg:h-80 object-cover rounded-md" src={f2} alt="" />
+        <img className="w-full h-52 sm:h-64 lg:h-80 object-cover rounded-md" src={ta} alt="" />
+        <img className="w-full h-52 sm:h-64 lg:h-80 object-cover rounded-md" src={tc} alt="" />
+        <img className="w-full h-52 sm:h-64 lg:h-80 object-cover rounded-md" src={f3} alt="" />
+      </div>
     </div>
   )
 }
