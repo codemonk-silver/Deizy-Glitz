@@ -1,30 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { FaStar, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+
+// ✅ Make sure these CSS imports are inside main.jsx or index.js too!
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 // Custom Next Arrow
-const NextArrow = ({ onClick }) => (
+const NextArrow = ({ className, style, onClick }) => (
   <button
+    className={`${className} !flex !items-center !justify-center bg-gray-800 text-white p-2 sm:p-3 rounded-full shadow-lg hover:bg-gray-700`}
+    style={{ ...style }}
     onClick={onClick}
-    className="absolute right-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 sm:p-3 rounded-full shadow-lg z-10 hover:bg-gray-700"
   >
     <FaChevronRight />
   </button>
 );
 
 // Custom Prev Arrow
-const PrevArrow = ({ onClick }) => (
+const PrevArrow = ({ className, style, onClick }) => (
   <button
+    className={`${className} !flex !items-center !justify-center bg-gray-800 text-white p-2 sm:p-3 rounded-full shadow-lg hover:bg-gray-700`}
+    style={{ ...style }}
     onClick={onClick}
-    className="absolute left-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 sm:p-3 rounded-full shadow-lg z-10 hover:bg-gray-700"
   >
     <FaChevronLeft />
   </button>
 );
 
 const Testimonial = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    // ✅ Prevent hydration / refresh issues
+    setMounted(true);
+  }, []);
+
   const testimonials = [
     {
       id: 1,
@@ -80,13 +91,13 @@ const Testimonial = () => {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 3, // desktop
+    slidesToShow: 3, // default desktop
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
       {
-        breakpoint: 1024, // tablets
+        breakpoint: 1024, // tablet
         settings: { slidesToShow: 2 },
       },
       {
@@ -100,13 +111,14 @@ const Testimonial = () => {
     ],
   };
 
+  if (!mounted) return null; // prevent slider crash on refresh
+
   return (
     <div className="relative px-4 sm:px-8 md:px-16 lg:px-32 xl:px-56 py-10">
       <p className="text-xl sm:text-2xl font-semibold text-center mb-6">
         What Our Clients Say
       </p>
 
-      {/* Slider */}
       <Slider {...settings} className="-mx-2 sm:-mx-4">
         {testimonials.map((item) => (
           <div key={item.id} className="px-2 sm:px-4">
@@ -122,7 +134,6 @@ const Testimonial = () => {
                   <h3 className="font-semibold text-sm sm:text-base">
                     {item.name}
                   </h3>
-                  {/* Rating below name */}
                   <div className="flex text-yellow-400 mb-1">
                     {Array.from({ length: item.rating }, (_, i) => (
                       <FaStar key={i} />
