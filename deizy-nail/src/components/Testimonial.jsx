@@ -80,7 +80,7 @@ const Testimonial = () => {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 3, // desktop
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
@@ -90,7 +90,11 @@ const Testimonial = () => {
         settings: { slidesToShow: 2 },
       },
       {
-        breakpoint: 640, // mobile
+        breakpoint: 768, // small tablets
+        settings: { slidesToShow: 2 },
+      },
+      {
+        breakpoint: 767, // mobile
         settings: { slidesToShow: 1 },
       },
     ],
