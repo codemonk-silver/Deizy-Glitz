@@ -4,11 +4,11 @@ import { FaStar, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-// ✅ Custom Next Arrow - fully responsive
+// ✅ Custom Next Arrow - Now mobile responsive with buttons beside slider on mobile
 const NextArrow = ({ onClick }) => (
   <button
     onClick={onClick}
-    className="absolute right-2 md:right-[-40px] top-1/2 -translate-y-1/2 
+    className="absolute right-2 md:right-[-50px] top-1/2 -translate-y-1/2 
                bg-gray-800 text-white p-2 md:p-3 rounded-full shadow-lg z-10 hover:bg-gray-700
                text-sm md:text-base"
   >
@@ -16,11 +16,11 @@ const NextArrow = ({ onClick }) => (
   </button>
 );
 
-// ✅ Custom Prev Arrow - fully responsive
+// ✅ Custom Prev Arrow - Now mobile responsive with buttons beside slider on mobile
 const PrevArrow = ({ onClick }) => (
   <button
     onClick={onClick}
-    className="absolute left-2 md:left-[-40px] top-1/2 -translate-y-1/2 
+    className="absolute left-2 md:left-[-50px] top-1/2 -translate-y-1/2 
                bg-gray-800 text-white p-2 md:p-3 rounded-full shadow-lg z-10 hover:bg-gray-700
                text-sm md:text-base"
   >
@@ -32,7 +32,7 @@ const Testimonial = () => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // ✅ ensures slick initializes correctly after hydration
+    // ✅ ensures slick initializes correctly after page reload
     setMounted(true);
   }, []);
 
@@ -93,7 +93,7 @@ const Testimonial = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3, // desktop default
+    slidesToShow: 3,
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
@@ -101,15 +101,19 @@ const Testimonial = () => {
     swipeToSlide: true,
     responsive: [
       {
-        breakpoint: 1024, // tablets
-        settings: {
+        breakpoint: 1024,
+        settings: { 
           slidesToShow: 2,
+          dots: true,
         },
       },
       {
-        breakpoint: 768, // mobile
-        settings: {
-          slidesToShow: 1, // ✅ force single slide
+        breakpoint: 768,
+        settings: { 
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          dots: true,
+          arrows: true,
         },
       },
     ],
@@ -121,11 +125,11 @@ const Testimonial = () => {
         What Our Clients Say
       </p>
 
-      <div className="relative px-2 sm:px-6 md:px-8">
+      <div className="relative px-0 md:px-8">
         <Slider {...settings} className="-mx-2 sm:-mx-4">
           {testimonials.map((item) => (
             <div key={item.id} className="px-2 sm:px-4">
-              <div className="bg-white shadow-lg rounded-2xl p-4 sm:p-6 h-auto min-h-[240px] sm:h-56 flex flex-col justify-between">
+              <div className="bg-white shadow-lg rounded-2xl p-4 sm:p-6 h-auto min-h-[240px] sm:h-56 flex flex-col justify-between mx-2 md:mx-0">
                 {/* Image + Name + Rating */}
                 <div className="flex items-center gap-3">
                   <img
@@ -134,17 +138,13 @@ const Testimonial = () => {
                     className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover flex-shrink-0"
                   />
                   <div className="min-w-0 flex-1">
-                    <h3 className="font-semibold text-sm sm:text-base truncate">
-                      {item.name}
-                    </h3>
+                    <h3 className="font-semibold text-sm sm:text-base truncate">{item.name}</h3>
                     <div className="flex text-yellow-400 mb-1 text-xs sm:text-sm">
                       {Array.from({ length: item.rating }, (_, i) => (
                         <FaStar key={i} />
                       ))}
                     </div>
-                    <p className="text-xs sm:text-sm text-gray-500 truncate">
-                      {item.role}
-                    </p>
+                    <p className="text-xs sm:text-sm text-gray-500 truncate">{item.role}</p>
                   </div>
                 </div>
 
