@@ -6,6 +6,7 @@ import About from '../src/pages/About'
 import Contact from '../src/pages/Contact'
 import Service from '../src/pages/Service'
 import Navbar from '../src/components/Navbar'
+import Footer from '../src/components/Footer'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -20,6 +21,7 @@ const App = () => {
             <Route path='/portfolio' element={<Portfolio />} />
             <Route path='/service' element={<Service />} />
         </Routes>
+      <Footer />
     </div>
   )
 }

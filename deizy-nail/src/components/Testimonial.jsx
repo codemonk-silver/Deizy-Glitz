@@ -1,34 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
-import { FaStar, FaChevronLeft, FaChevronRight } from "react-icons/fa"; 
-
-
+import { FaStar, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 // Custom Next Arrow
-const NextArrow = ({ onClick }) => {
-  return (
-    <button
-      onClick={onClick}
-      className="absolute right-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow-lg z-10 hover:bg-gray-700"
-    >
-      <FaChevronRight />
-    </button>
-  );
-};
+const NextArrow = ({ onClick }) => (
+  <button
+    onClick={onClick}
+    className="absolute right-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow-lg z-10 hover:bg-gray-700"
+  >
+    <FaChevronRight />
+  </button>
+);
 
 // Custom Prev Arrow
-const PrevArrow = ({ onClick }) => {
-  return (
-    <button
-      onClick={onClick}
-      className="absolute left-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow-lg z-10 hover:bg-gray-700"
-    >
-      <FaChevronLeft />
-    </button>
-  );
-};
+const PrevArrow = ({ onClick }) => (
+  <button
+    onClick={onClick}
+    className="absolute left-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow-lg z-10 hover:bg-gray-700"
+  >
+    <FaChevronLeft />
+  </button>
+);
 
 const Testimonial = () => {
-  
+  const [slidesToShow, setSlidesToShow] = useState(3); // dynamic control
+
+  // 🔧 Detect screen size on mount and resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setSlidesToShow(1); // mobile
+      } else if (window.innerWidth < 1024) {
+        setSlidesToShow(2); // tablet
+      } else {
+        setSlidesToShow(3); // desktop
+      }
+    };
+    handleResize(); // run on load
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const testimonials = [
     {
@@ -82,23 +92,14 @@ const Testimonial = () => {
   ];
 
   const settings = {
-    dots: false,
+    dots: window.innerWidth < 640, // show dots only on mobile
     infinite: true,
-    speed: 500,
-    slidesToShow: 3,
+    speed: 600,
+    slidesToShow,
     slidesToScroll: 1,
+    arrows: window.innerWidth >= 640, // hide arrows on mobile
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: { slidesToShow: 2 },
-      },
-      {
-        breakpoint: 640,
-        settings: { slidesToShow: 1 },
-      },
-    ],
   };
 
   return (
@@ -106,12 +107,12 @@ const Testimonial = () => {
       <p className="text-2xl font-semibold text-center mb-6">
         What Our Clients Say
       </p>
-      <div className="w-full overflow-hidden">
+
       <Slider {...settings}>
         {testimonials.map((item) => (
-          <div key={item.id} className="px-4"> {/* 👈 spacing between slides */}
-            <div className="bg-white shadow-lg rounded-2xl p-6 h-56 flex flex-col justify-between">
-              {/* Top Section: Image + Name + Stars */}
+          <div key={item.id} className="px-3">
+            <div className="bg-white shadow-md rounded-2xl p-6 h-56 flex flex-col justify-between">
+              {/* Header */}
               <div className="flex items-center gap-3">
                 <img
                   src={item.image}
@@ -129,13 +130,12 @@ const Testimonial = () => {
                 </div>
               </div>
 
-              {/* Testimonial text */}
+              {/* Text */}
               <p className="text-gray-600 italic mt-4">"{item.text}"</p>
             </div>
           </div>
         ))}
       </Slider>
-      </div>
     </div>
   );
 };
