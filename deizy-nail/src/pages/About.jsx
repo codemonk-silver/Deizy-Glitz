@@ -6,7 +6,7 @@ const About = () => {
     <div className='px-56 py-10'>
         <div className="relative">
                 <img
-                  className="w-full h-56 sm:h-64 md:h-80 lg:h-96 object-cover rounded-xl"
+                  className="w-full h-76 sm:h-64 md:h-80 lg:h-96 object-cover rounded-xl"
                   src={heroimg}
                   alt="hero"
                 />
@@ -40,7 +40,7 @@ const About = () => {
               </div>
          </div>
          <div className=''>
-          
+
          </div>
     </div>
   )

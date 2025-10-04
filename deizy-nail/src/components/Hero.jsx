@@ -31,7 +31,7 @@ const Hero = () => {
       {/* Hero Section */}
       <div className="relative">
         <img
-          className="w-full h-64 md:h-80 lg:h-96 object-cover mt-4 rounded-xl"
+          className="w-full h-74 md:h-80 lg:h-96 object-cover mt-4 rounded-xl"
           src={heroimg}
           alt="heroimg"
         />
