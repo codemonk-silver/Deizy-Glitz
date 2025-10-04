@@ -1,49 +1,137 @@
-import React from 'react'
-import heroimg from '../assets/heroimg.png'
+import React from 'react';
+import { FaHandHoldingHeart, FaPalette, FaUserCheck } from "react-icons/fa6"; 
+import heroimg from '../assets/heroimg.png';
+import tb from '../assets/tb.jpg';
+import ta from '../assets/ta.jpg';
+import tc from '../assets/tc.jpg';
 
 const About = () => {
+  const teamMembers = [
+    {
+      img: tb,
+      name: "Modasola Elufisan",
+      job: "Lead Nail Artist",
+      desc: "With over 10 years of experience, Modasola specializes in creative nail designs and luxury hand treatments.",
+    },
+    {
+      img: ta,
+      name: "Amara Benson",
+      job: "Senior Nail Technician",
+      desc: "Amara’s precision and gentle care make her a favorite for both manicure and pedicure services.",
+    },
+    {
+      img: tc,
+      name: "Tosin Adeyemi",
+      job: "Nail Art Specialist",
+      desc: "Tosin brings your nail ideas to life with stunning art, color, and custom design techniques.",
+    },
+  ];
+
+  const commitmentCards = [
+    {
+      icon: <FaHandHoldingHeart size={40} className="text-pink-600" />,
+      title: "Hygiene and Safety",
+      desc: "We uphold the highest standards of cleanliness, sterilization, and client safety in every service.",
+    },
+    {
+      icon: <FaPalette size={40} className="text-pink-600" />,
+      title: "Creativity and Artistry",
+      desc: "Our team blends modern trends with artistic precision to craft unique nail designs that inspire confidence.",
+    },
+    {
+      icon: <FaUserCheck size={40} className="text-pink-600" />,
+      title: "Client Focused",
+      desc: "Your comfort and satisfaction are at the heart of everything we do — every visit is a personalized experience.",
+    },
+  ];
+
   return (
-    <div className='px-56 py-10'>
-        <div className="relative">
-                <img
-                  className="w-full h-76 sm:h-64 md:h-80 lg:h-96 object-cover rounded-xl"
-                  src={heroimg}
-                  alt="hero"
-                />
-                <div className="absolute inset-0 bg-black/50 rounded-xl"></div>
-        
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-3">
-                    Explore Our Services
-                  </h1>
-                  <p className="text-white text-sm sm:text-base max-w-xl">
-                    Pamper Yourself With Our Signature Nail Treatments
-                  </p>
-                </div>
+    <div className="px-4 sm:px-8 md:px-12 lg:px-28 xl:px-56 py-10">
+      {/* HERO SECTION */}
+      <div className="relative mb-10">
+        <img
+          className="w-full h-56 sm:h-72 md:h-80 lg:h-96 object-cover rounded-xl"
+          src={heroimg}
+          alt="hero"
+        />
+        <div className="absolute inset-0 bg-black/50 rounded-xl"></div>
+
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 leading-tight">
+            Where Artistry Meets Your Fingertips
+          </h1>
+          <p className="text-white text-sm sm:text-base max-w-xl">
+            Pamper Yourself With Our Signature Nail Treatments
+          </p>
         </div>
-         <div className='py-8'>
-              <p className='text-xl font-bold'>Our Story</p>
-              <div className='flex justify-between gap-10 mt-5'>
-                <div className='flex flex-col w-7xl'>
-                  <p className='text-md text-lg font-medium mb-2'>
-                    From Passion to Profession
-                  </p>
-                  <p className='text-pink-700 font-medium mb-4'>
-                      Founded in 2016 by the lead artist Modasola Elufisan. Our Salon was born from a lifelong passion for nail art and a desire to create a welcoming space where clients can feel pampered and beautiful. We believe that nil care is a form of self-expression, and our mission is to provide an unparalleled eperience that leaves you feeling confidant and inspired.
-                  </p>
-                  <p className='text-md font-medium text-lg mb-2'>Our Mission</p>
-                  <p className='text-pink-700 font-medium'>
-                    Our Mission is to deliver exceptional nail services in a clean, safe, and friendly environment. We are committed to using high quality products and staying up-to-date with the latest trends and techniques to ensure you received the best care possible.
-                  </p>
-                </div>
-                <img className='w-full h-78 object-cover' src={heroimg} alt='' />
-              </div>
-         </div>
-         <div className=''>
+      </div>
 
-         </div>
+      {/* STORY SECTION */}
+      <div className="py-8">
+        <p className="text-lg sm:text-xl font-bold mb-3 text-center sm:text-left">Our Story</p>
+        <div className="flex flex-col lg:flex-row justify-between gap-8 mt-5">
+          <div className="flex flex-col lg:w-1/2">
+            <p className="text-base sm:text-lg font-medium mb-2">From Passion to Profession</p>
+            <p className="text-pink-700 mb-4 leading-relaxed text-sm sm:text-base">
+              Founded in 2016 by lead artist <span className="font-semibold">Modasola Elufisan</span>, our salon was born from a lifelong passion for nail art and a desire to create a welcoming space where clients feel pampered and beautiful. We believe nail care is self-expression, and our mission is to provide an experience that leaves you confident and inspired.
+            </p>
+            <p className="text-base sm:text-lg font-medium mb-2">Our Mission</p>
+            <p className="text-pink-700 leading-relaxed text-sm sm:text-base">
+              Our mission is to deliver exceptional nail services in a clean, safe, and friendly environment. We use high-quality products and stay up to date with the latest trends and techniques to ensure you receive the best care possible.
+            </p>
+          </div>
+          <img
+            className="w-full lg:w-1/2 h-60 sm:h-72 lg:h-80 object-cover rounded-xl mt-4 lg:mt-0"
+            src={heroimg}
+            alt="Our Story"
+          />
+        </div>
+      </div>
+
+      {/* TEAM SECTION */}
+      <div className="py-10">
+        <p className="text-lg sm:text-xl font-bold mb-10 text-center">Meet Our Talented Team</p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {teamMembers.map((member, index) => (
+            <div
+              key={index}
+              className="bg-white shadow-lg rounded-xl flex flex-col items-center text-center p-5 sm:p-6 hover:shadow-2xl transition-all duration-300"
+            >
+              <img
+                src={member.img}
+                alt={member.name}
+                className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 object-cover rounded-full mb-4"
+              />
+              <h3 className="text-base sm:text-lg font-semibold text-gray-800">{member.name}</h3>
+              <p className="text-pink-600 text-xs sm:text-sm font-medium mb-2">{member.job}</p>
+              <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-4">{member.desc}</p>
+              <button className="bg-pink-600 text-white text-xs sm:text-sm px-4 py-2 rounded-full hover:bg-pink-700 transition-all">
+                Book with {member.name.split(" ")[0]}
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* COMMITMENT SECTION */}
+      <div className="pt-12">
+        <p className="text-lg sm:text-xl font-bold mb-10 text-center">Our Commitment to You</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {commitmentCards.map((card, index) => (
+            <div
+              key={index}
+              className="bg-white shadow-md rounded-xl p-5 sm:p-6 flex flex-col items-center text-center hover:shadow-lg transition-all duration-300"
+            >
+              <div className="mb-4">{card.icon}</div>
+              <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2">{card.title}</h3>
+              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">{card.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default About
+export default About;
