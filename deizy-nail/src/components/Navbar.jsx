@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa"; // icons for mobile toggle
+import { FaBars, FaTimes } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -9,62 +10,110 @@ const Navbar = () => {
     { to: "/", label: "Home" },
     { to: "/service", label: "Services" },
     { to: "/portfolio", label: "Portfolio" },
-    { to: "/testimonials", label: "Testimonials" },
     { to: "/about", label: "About" },
     { to: "/contact", label: "Contact" },
   ];
 
   return (
-    <nav className="flex justify-between items-center h-16 px-6 md:px-20 lg:px-56 shadow-md bg-white relative">
+    <motion.nav
+      initial={{ y: -60, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="flex justify-between items-center h-16 px-6 md:px-20 lg:px-56 shadow-md bg-white relative z-50"
+    >
       {/* Logo */}
-      <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-pink-600">
+      <motion.h1
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="text-2xl md:text-3xl lg:text-4xl font-bold text-pink-600"
+      >
         Deizy Glitz
-      </h1>
+      </motion.h1>
 
       {/* Desktop Menu */}
       <div className="hidden md:flex items-center gap-6 lg:gap-10">
         {navLinks.map((link, index) => (
-          <NavLink
+          <motion.div
             key={index}
-            to={link.to}
-            className="flex flex-col items-center justify-center min-h-[32px] hover:text-pink-500 transition-colors"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 + index * 0.1, duration: 0.4 }}
           >
-            <p>{link.label}</p>
-            <hr className="w-2/4 border-none h-[1.5px] bg-pink-300 hidden" />
-          </NavLink>
+            <NavLink
+              to={link.to}
+              className={({ isActive }) =>
+                `relative flex flex-col items-center justify-center min-h-[32px] transition-all duration-300 ${
+                  isActive ? "text-pink-600" : "text-gray-700 hover:text-pink-500"
+                }`
+              }
+            >
+              <span>{link.label}</span>
+              <motion.div
+                layoutId="underline"
+                className="h-[2px] w-0 bg-pink-500 transition-all duration-300"
+                whileHover={{ width: "50%" }}
+              />
+            </NavLink>
+          </motion.div>
         ))}
-        <button className="px-3 py-1 rounded-md bg-pink-600 text-white font-medium ml-4 hover:bg-pink-700 transition">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="px-3 py-1 rounded-md bg-pink-600 text-white font-medium ml-4 hover:bg-pink-700 transition"
+        >
           Book Now
-        </button>
+        </motion.button>
       </div>
 
       {/* Mobile Menu Button */}
-      <button
+      <motion.button
+        whileTap={{ scale: 0.9 }}
         onClick={() => setMenuOpen(!menuOpen)}
         className="md:hidden text-2xl text-pink-600 focus:outline-none"
       >
         {menuOpen ? <FaTimes /> : <FaBars />}
-      </button>
+      </motion.button>
 
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="absolute top-16 left-0 w-full bg-white shadow-md flex flex-col items-center py-4 gap-4 md:hidden z-20">
-          {navLinks.map((link, index) => (
-            <NavLink
-              key={index}
-              to={link.to}
-              onClick={() => setMenuOpen(false)} // close menu when clicked
-              className="text-lg hover:text-pink-500 transition-colors"
+      {/* Mobile Menu (Animated) */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            key="mobileMenu"
+            initial={{ y: -30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -20, opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="absolute top-16 left-0 w-full bg-white shadow-lg flex flex-col items-center py-6 gap-6 md:hidden z-40"
+          >
+            {navLinks.map((link, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <NavLink
+                  to={link.to}
+                  onClick={() => setMenuOpen(false)}
+                  className="text-lg text-gray-700 hover:text-pink-600 transition-colors"
+                >
+                  {link.label}
+                </NavLink>
+              </motion.div>
+            ))}
+
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-5 py-2 rounded-md bg-pink-600 text-white font-semibold hover:bg-pink-700 transition"
             >
-              {link.label}
-            </NavLink>
-          ))}
-          <button className="px-4 py-2 rounded-md bg-pink-600 text-white font-medium hover:bg-pink-700 transition">
-            Book Now
-          </button>
-        </div>
-      )}
-    </nav>
+              Book Now
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.nav>
   );
 };
 
