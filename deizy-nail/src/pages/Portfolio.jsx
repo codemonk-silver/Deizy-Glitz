@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   FaBorderAll,
   FaPaintBrush,
@@ -37,12 +37,15 @@ const imageData = {
 
 const Portfolio = () => {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [isVisible, setIsVisible] = useState(false);
-  const [prevCategory, setPrevCategory] = useState("All");
+  const [scrollY, setScrollY] = useState(0);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 100);
-    return () => clearTimeout(timer);
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const categories = [
@@ -54,194 +57,72 @@ const Portfolio = () => {
     { name: "Pedicure", icon: <FaSpa size={22} /> },
   ];
 
-  const gallery = imageData;
-
-  const allImages = Object.keys(gallery).flatMap((key) =>
-    gallery[key].map((img) => ({ img, category: key }))
+  const allImages = Object.keys(imageData).flatMap((key) =>
+    imageData[key].map((img) => ({ img, category: key }))
   );
 
   const filteredGallery =
     activeCategory === "All"
       ? allImages
-      : gallery[activeCategory]?.map((img) => ({
+      : imageData[activeCategory]?.map((img) => ({
           img,
           category: activeCategory,
         })) || [];
 
-  const handleCategoryChange = (newCategory) => {
-    setPrevCategory(activeCategory);
-    setActiveCategory(newCategory);
-  };
-
   return (
-    <section className="px-4 sm:px-8 md:px-12 lg:px-24 xl:px-56 py-16 overflow-hidden bg-gradient-to-b from-pink-50 to-white">
-      <style>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes fadeOutDown {
-          from {
-            opacity: 1;
-            transform: translateY(0);
-          }
-          to {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-        }
-
-        @keyframes slideInLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes galleryItemIn {
-          from {
-            opacity: 0;
-            transform: scale(0.95) translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-          }
-        }
-
-        .animate-fade-in-up {
-          animation: fadeInUp 0.6s ease-out forwards;
-        }
-
-        .animate-gallery-item {
-          animation: galleryItemIn 0.5s ease-out forwards;
-        }
-
-        .animate-slide-in-left {
-          animation: slideInLeft 0.4s ease-out forwards;
-        }
-
-        .gallery-grid {
-          display: grid;
-          gap: 1.5rem;
-        }
-
-        .gallery-item {
-          will-change: auto;
-          contain: layout style paint;
-        }
-
-        .gallery-item:hover {
-          will-change: transform;
-        }
-
-        .gallery-item img {
-          backface-visibility: hidden;
-          -webkit-font-smoothing: antialiased;
-          -webkit-transform: translateZ(0);
-          transform: translateZ(0);
-        }
-
-        .category-btn {
-          will-change: transform, background-color;
-          backface-visibility: hidden;
-          -webkit-font-smoothing: antialiased;
-        }
-
-        /* Stagger delays for gallery items */
-        .gallery-item:nth-child(1) { animation-delay: 0.1s; }
-        .gallery-item:nth-child(2) { animation-delay: 0.15s; }
-        .gallery-item:nth-child(3) { animation-delay: 0.2s; }
-        .gallery-item:nth-child(4) { animation-delay: 0.25s; }
-        .gallery-item:nth-child(5) { animation-delay: 0.3s; }
-        .gallery-item:nth-child(6) { animation-delay: 0.35s; }
-        .gallery-item:nth-child(7) { animation-delay: 0.4s; }
-        .gallery-item:nth-child(8) { animation-delay: 0.45s; }
-        .gallery-item:nth-child(9) { animation-delay: 0.5s; }
-        .gallery-item:nth-child(10) { animation-delay: 0.55s; }
-        .gallery-item:nth-child(11) { animation-delay: 0.6s; }
-        .gallery-item:nth-child(12) { animation-delay: 0.65s; }
-
-        @media (prefers-reduced-motion: reduce) {
-          * {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
-          }
-        }
-      `}</style>
-
+    <section
+      ref={sectionRef}
+      className="px-4 sm:px-8 md:px-12 lg:px-24 xl:px-56 py-16 overflow-hidden bg-gradient-to-b from-pink-50 to-white"
+    >
       {/* Title */}
-      <h2
-        className={`text-3xl sm:text-4xl font-bold mb-10 text-center text-gray-800 ${
-          isVisible ? "animate-fade-in-up" : ""
-        }`}
-      >
+      <h2 className="text-3xl sm:text-4xl font-bold mb-10 text-center text-gray-800 animate-fadeIn">
         Our Work
       </h2>
 
       {/* Category Buttons */}
       <div className="flex overflow-x-auto justify-start sm:justify-center gap-3 sm:gap-5 mb-10 pb-2 scrollbar-hide">
-        {categories.map((cat, idx) => (
+        {categories.map((cat) => (
           <button
             key={cat.name}
-            onClick={() => handleCategoryChange(cat.name)}
-            style={{
-              animation: isVisible ? `slideInLeft 0.5s ease-out forwards` : "none",
-              animationDelay: `${idx * 0.08}s`,
-            }}
-            className={`category-btn flex flex-col items-center px-4 sm:px-6 py-3 rounded-lg min-w-[90px] sm:min-w-[110px] md:min-w-[130px] flex-shrink-0 shadow-sm transition-all duration-300 ${
+            onClick={() => setActiveCategory(cat.name)}
+            className={`flex flex-col items-center px-4 sm:px-6 py-3 rounded-lg min-w-[90px] sm:min-w-[110px] md:min-w-[130px] flex-shrink-0 transition-all duration-300 transform ${
               activeCategory === cat.name
                 ? "bg-pink-600 text-white shadow-lg scale-105"
-                : "bg-pink-300 text-white hover:bg-pink-400 hover:shadow-md"
+                : "bg-pink-300 text-white hover:bg-pink-400 hover:shadow-md hover:scale-105"
             }`}
           >
-            <div className="mb-1 transition-transform duration-300 group-hover:scale-110">
-              {cat.icon}
-            </div>
-            <span className="text-xs sm:text-sm font-semibold">{cat.name}</span>
+            <div className="mb-1">{cat.icon}</div>
+            <span className="text-xs sm:text-sm font-semibold">
+              {cat.name}
+            </span>
           </button>
         ))}
       </div>
 
       {/* Gallery */}
-      <div
-        className={`gallery-grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 sm:gap-6 gap-4 ${
-          isVisible ? "" : "opacity-0"
-        }`}
-      >
+      <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 sm:gap-6 gap-4">
         {filteredGallery.length > 0 ? (
           filteredGallery.map((item, index) => (
             <div
               key={`${item.img}-${index}`}
-              className="gallery-item animate-gallery-item relative overflow-hidden rounded-xl shadow-md hover:shadow-2xl group cursor-pointer transition-shadow duration-500"
+              className="relative overflow-hidden rounded-xl shadow-md group cursor-pointer transform transition-all duration-500 hover:shadow-2xl hover:scale-[1.02] animate-fadeInUp"
+              style={{
+                transform: `translateY(${(scrollY - index * 50) * 0.02}px)`,
+              }}
             >
-              <div className="relative overflow-hidden rounded-xl bg-gray-100">
-                <img
-                  src={item.img}
-                  alt={item.category}
-                  loading="lazy"
-                  className="w-full h-56 sm:h-64 md:h-72 object-cover brightness-95 transition-all duration-700 ease-out group-hover:scale-110 group-hover:brightness-100"
-                />
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-pink-600 to-transparent text-white text-center py-2 text-sm sm:text-base font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <img
+                src={item.img}
+                alt={item.category}
+                loading="lazy"
+                className="w-full h-56 sm:h-64 md:h-72 object-cover brightness-95 transition-transform duration-700 ease-out group-hover:scale-110"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-pink-600 to-transparent text-white text-center py-2 text-sm sm:text-base font-medium opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-3 group-hover:translate-y-0">
                 {item.category}
               </div>
             </div>
           ))
         ) : (
-          <p className="text-center col-span-full text-gray-500 text-lg">
+          <p className="text-center col-span-full text-gray-500 text-lg animate-fadeIn">
             No images found.
           </p>
         )}
