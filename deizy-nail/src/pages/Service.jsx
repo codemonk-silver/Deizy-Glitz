@@ -1,4 +1,4 @@
-import React, { useState, useMemo, memo } from "react";
+import React, { useState, useMemo, memo, useEffect, useRef } from "react";
 import { FaStar } from "react-icons/fa";
 import heroimg from "../assets/heroimg.png";
 import mani from "../assets/mani.jpg";
@@ -14,59 +14,150 @@ import ta from "../assets/ta.jpg";
 import tb from "../assets/tb.jpg";
 import tc from "../assets/tc.jpg";
 
+// ✅ Reusable hook to trigger animation on scroll
+const useInView = (threshold = 0.2) => {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => entry.isIntersecting && setInView(true),
+      { threshold }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [threshold]);
+
+  return [ref, inView];
+};
+
 const Service = memo(() => {
   const [activeService, setActiveService] = useState("Manicure");
 
   const serviceData = useMemo(
     () => ({
       Manicure: [
-        { img: mani, title: "Luxury Manicure", desc: "Experience our soothing hand care treatment with nourishing oils and flawless polish." },
-        { img: manic, title: "Classic Manicure", desc: "A timeless treatment that keeps your hands soft and nails beautifully polished." },
-        { img: manicu, title: "Gel Manicure", desc: "Enjoy chip-free shine with our long-lasting gel finish and expert touch." },
+        {
+          img: mani,
+          title: "Luxury Manicure",
+          desc: "Experience our soothing hand care treatment with nourishing oils and flawless polish.",
+        },
+        {
+          img: manic,
+          title: "Classic Manicure",
+          desc: "A timeless treatment that keeps your hands soft and nails beautifully polished.",
+        },
+        {
+          img: manicu,
+          title: "Gel Manicure",
+          desc: "Enjoy chip-free shine with our long-lasting gel finish and expert touch.",
+        },
       ],
       Pedicure: [
-        { img: pedi, title: "Spa Pedicure", desc: "Relax and rejuvenate your feet with an exfoliating soak and massage treatment." },
-        { img: pedic, title: "Deluxe Pedicure", desc: "A deep foot care experience that restores hydration and leaves you feeling refreshed." },
-        { img: pedicu, title: "Express Pedicure", desc: "Perfect for those on the go — quick, clean, and polished to perfection." },
+        {
+          img: pedi,
+          title: "Spa Pedicure",
+          desc: "Relax and rejuvenate your feet with an exfoliating soak and massage treatment.",
+        },
+        {
+          img: pedic,
+          title: "Deluxe Pedicure",
+          desc: "A deep foot care experience that restores hydration and leaves you feeling refreshed.",
+        },
+        {
+          img: pedicu,
+          title: "Express Pedicure",
+          desc: "Perfect for those on the go — quick, clean, and polished to perfection.",
+        },
       ],
       "Nail Enhancements": [
-        { img: ench, title: "Acrylic Extensions", desc: "Get long-lasting nail extensions designed to your ideal shape and style." },
-        { img: encha, title: "Gel Extensions", desc: "Flexible, natural-looking gel enhancements with a durable, glossy finish." },
-        { img: enchan, title: "Overlay Treatment", desc: "Strengthen your natural nails with a smooth, elegant overlay." },
+        {
+          img: ench,
+          title: "Acrylic Extensions",
+          desc: "Get long-lasting nail extensions designed to your ideal shape and style.",
+        },
+        {
+          img: encha,
+          title: "Gel Extensions",
+          desc: "Flexible, natural-looking gel enhancements with a durable, glossy finish.",
+        },
+        {
+          img: enchan,
+          title: "Overlay Treatment",
+          desc: "Strengthen your natural nails with a smooth, elegant overlay.",
+        },
       ],
       "Nail Arts": [
-        { img: ta, title: "Custom Nail Art", desc: "Express your creativity with our stunning custom designs and hand-painted details." },
-        { img: tc, title: "Minimalist Design", desc: "Clean, simple lines and elegant colors for a modern nail look." },
-        { img: tb, title: "3D Nail Art", desc: "Add sparkle and texture with bold, eye-catching 3D designs." },
+        {
+          img: ta,
+          title: "Custom Nail Art",
+          desc: "Express your creativity with our stunning custom designs and hand-painted details.",
+        },
+        {
+          img: tc,
+          title: "Minimalist Design",
+          desc: "Clean, simple lines and elegant colors for a modern nail look.",
+        },
+        {
+          img: tb,
+          title: "3D Nail Art",
+          desc: "Add sparkle and texture with bold, eye-catching 3D designs.",
+        },
       ],
     }),
     []
   );
 
+  // 🔥 Observe each section for lazy reveal
+  const [heroRef, heroInView] = useInView(0.1);
+  const [navRef, navInView] = useInView(0.1);
+  const [serviceRef, serviceInView] = useInView(0.15);
+  const [testRef, testInView] = useInView(0.15);
+
   return (
     <div className="px-4 sm:px-8 md:px-12 lg:px-24 xl:px-56 mt-8 overflow-hidden selection:bg-pink-200/40">
       {/* HERO SECTION */}
-      <section className="relative w-full h-64 sm:h-72 md:h-80 lg:h-[28rem] overflow-hidden rounded-2xl perspective-1000 animate-heroEntranceSmooth">
+      <section
+        ref={heroRef}
+        className={`relative w-full h-74 sm:h-72 md:h-80 lg:96 overflow-hidden rounded-2xl perspective-1000 transition-all duration-1000 ${
+          heroInView ? "animate-heroEntranceSmooth" : "opacity-0"
+        }`}
+      >
         <img
           src={heroimg}
           alt="Nail salon hero"
           loading="lazy"
           decoding="async"
-          className="w-full h-full object-cover transform scale-125 animate-heroZoomSmooth"
+          className={`w-full h-full object-cover transform scale-125 transition-all duration-[2000ms] ${
+            heroInView ? "animate-heroZoomSmooth" : ""
+          }`}
         />
         <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white drop-shadow-xl animate-textRevealSmooth">
+          <h1
+            className={`text-3xl sm:text-4xl lg:text-6xl font-bold text-white drop-shadow-xl transition-all duration-1000 ${
+              heroInView ? "animate-textRevealSmooth" : "opacity-0"
+            }`}
+          >
             Explore Our Services
           </h1>
-          <p className="mt-3 text-white/90 text-sm sm:text-base max-w-xl leading-relaxed animate-fadeUpSmooth">
+          <p
+            className={`mt-3 text-white/90 text-sm sm:text-base max-w-xl leading-relaxed transition-all duration-1000 delay-200 ${
+              heroInView ? "animate-fadeUpSmooth" : "opacity-0"
+            }`}
+          >
             Pamper Yourself With Our Signature Nail Treatments
           </p>
         </div>
       </section>
 
       {/* NAVIGATION */}
-      <nav className="mt-12 flex flex-wrap justify-center gap-4 sm:gap-6 text-sm sm:text-base font-medium animate-fadeInSmooth">
+      <nav
+        ref={navRef}
+        className={`mt-12 flex flex-wrap justify-center gap-4 sm:gap-6 text-sm sm:text-base font-medium transition-all duration-1000 ${
+          navInView ? "animate-fadeInSmooth" : "opacity-0"
+        }`}
+      >
         {Object.keys(serviceData).map((service) => (
           <button
             key={service}
@@ -84,13 +175,18 @@ const Service = memo(() => {
 
       {/* SERVICE CARDS */}
       <section
+        ref={serviceRef}
         key={activeService}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 animate-sectionFadeSmooth"
+        className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 transition-all duration-[1200ms] ${
+          serviceInView ? "animate-sectionFadeSmooth" : "opacity-0"
+        }`}
       >
         {serviceData[activeService].map((item, i) => (
           <article
             key={i}
-            className="relative group bg-white shadow-lg rounded-2xl overflow-hidden transform transition-all duration-[1200ms] hover:-translate-y-4 hover:rotate-[0.7deg] hover:shadow-2xl animate-cardRiseSmooth"
+            className={`relative group bg-white shadow-lg rounded-2xl overflow-hidden transform transition-all duration-[1200ms] hover:-translate-y-4 hover:rotate-[0.7deg] hover:shadow-2xl ${
+              serviceInView ? "animate-cardRiseSmooth" : "opacity-0"
+            }`}
             style={{ animationDelay: `${i * 0.15}s` }}
           >
             <div className="relative h-52 sm:h-60 overflow-hidden">
@@ -115,7 +211,12 @@ const Service = memo(() => {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="pt-20 pb-10 animate-fadeInSmooth">
+      <section
+        ref={testRef}
+        className={`pt-20 pb-10 transition-all duration-1000 ${
+          testInView ? "animate-fadeInSmooth" : "opacity-0"
+        }`}
+      >
         <h2 className="text-center text-lg sm:text-xl font-semibold mb-10 tracking-wide">
           What Our Clients Say
         </h2>
@@ -138,7 +239,9 @@ const Service = memo(() => {
           ].map((review, i) => (
             <div
               key={i}
-              className="bg-white shadow-md rounded-2xl p-5 flex-1 hover:shadow-2xl hover:-translate-y-3 transition-all duration-[1000ms] animate-cardFloatSmooth"
+              className={`bg-white shadow-md rounded-2xl p-5 flex-1 hover:shadow-2xl hover:-translate-y-3 transition-all duration-[1000ms] ${
+                testInView ? "animate-cardFloatSmooth" : "opacity-0"
+              }`}
               style={{ animationDelay: `${i * 0.25}s` }}
             >
               <div className="flex items-center mb-3">
@@ -170,7 +273,7 @@ const Service = memo(() => {
         </div>
       </section>
 
-      {/* 🌸 Smooth & Modern Animations */}
+      {/* 🔮 Animation Keyframes */}
       <style>{`
         @keyframes heroZoomSmooth { 0% {transform:scale(1.25);} 100% {transform:scale(1);} }
         @keyframes heroEntranceSmooth { 0% {opacity:0; transform:translateY(60px) scale(0.92) rotateX(8deg);} 100% {opacity:1; transform:translateY(0) scale(1) rotateX(0);} }
