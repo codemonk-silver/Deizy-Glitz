@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FaBorderAll,
@@ -18,6 +18,13 @@ import tc from "../assets/tc.jpg";
 
 const Portfolio = () => {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    // This triggers the fade-in animation immediately after mount
+    const timer = setTimeout(() => setIsVisible(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   const categories = [
     { name: "All", icon: <FaBorderAll size={22} /> },
@@ -49,12 +56,11 @@ const Portfolio = () => {
         })) || [];
 
   return (
-    <section className="px-4 sm:px-8 md:px-12 lg:px-24 xl:px-56 py-16 overflow-hidden">
+    <section className="px-4 sm:px-8 md:px-12 lg:px-24 xl:px-56 py-16">
       {/* Title */}
       <motion.h2
         initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        animate={isVisible ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.7, ease: "easeOut" }}
         className="text-3xl sm:text-4xl font-bold mb-10 text-center text-gray-800"
       >
@@ -64,17 +70,15 @@ const Portfolio = () => {
       {/* Category Buttons */}
       <motion.div
         className="flex overflow-x-auto justify-start sm:justify-center gap-3 sm:gap-5 mb-10 pb-2 scrollbar-hide"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.2, duration: 0.8 }}
+        initial={{ opacity: 0, y: 10 }}
+        animate={isVisible ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6 }}
       >
         {categories.map((cat) => (
           <motion.button
             key={cat.name}
             whileTap={{ scale: 0.93 }}
             whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 200, damping: 12 }}
             onClick={() => setActiveCategory(cat.name)}
             className={`flex flex-col items-center px-4 sm:px-6 py-3 rounded-lg transition-all duration-500 ease-in-out min-w-[90px] sm:min-w-[110px] md:min-w-[130px] flex-shrink-0 shadow-sm 
               ${
@@ -92,10 +96,7 @@ const Portfolio = () => {
       </motion.div>
 
       {/* Gallery */}
-      <motion.div
-        layout
-        className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6"
-      >
+      <motion.div layout className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6">
         <AnimatePresence mode="wait">
           {filteredGallery.length > 0 ? (
             filteredGallery.map((item, index) => (
@@ -117,8 +118,6 @@ const Portfolio = () => {
                   alt={item.category}
                   className="w-full h-56 sm:h-64 md:h-72 object-cover brightness-95 transition-all duration-700 ease-in-out group-hover:scale-105 group-hover:brightness-100"
                 />
-
-                {/* Overlay Label */}
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   whileHover={{ opacity: 1, y: 0 }}

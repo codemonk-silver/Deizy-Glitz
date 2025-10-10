@@ -1,13 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion"; // ✅ Animation library
-import f1 from "../assets/f1.jpg";
-import tb from "../assets/tb.jpg";
-import f2 from "../assets/f2.jpg";
-import ta from "../assets/ta.jpg";
-import tc from "../assets/tc.jpg";
-import f3 from "../assets/f3.jpg";
+import hom from "../assets/hom.jpg";
+import homm from "../assets/homm.jpg";
+import hoom from "../assets/hoom.jpg";
+import pedi from "../assets/pedi.jpg";
+import enchan from "../assets/enchan.jpg";
+import manicu from "../assets/manicu.jpg";
 
-const images = [f1, tb, f2, ta, tc, f3];
+const images = [hom, homm, hoom, pedi, enchan, manicu];
 
 // Framer Motion variants
 const fadeUp = {

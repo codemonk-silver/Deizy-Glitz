@@ -1,10 +1,16 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaStar } from "react-icons/fa";
 import heroimg from "../assets/heroimg.png";
-import f1 from "../assets/f1.jpg";
-import f2 from "../assets/f2.jpg";
-import f3 from "../assets/f3.jpg";
+import mani from "../assets/mani.jpg";
+import manic from "../assets/manic.jpg";
+import manicu from "../assets/manicu.jpg";
+import pedi from '../assets/pedi.jpg';
+import pedic from '../assets/pedic.jpg';
+import pedicu from '../assets/pedicu.jpeg';
+import ench from '../assets/ench.jpg';
+import encha from '../assets/encha.jpg';
+import enchan from '../assets/enchan.jpg';
 
 const Service = () => {
   const [activeService, setActiveService] = useState("Manicure");
@@ -12,76 +18,86 @@ const Service = () => {
   const serviceData = {
     Manicure: [
       {
-        img: f1,
+        img: mani,
         title: "Luxury Manicure",
         desc: "Experience our soothing hand care treatment with nourishing oils and flawless polish.",
       },
       {
-        img: f2,
+        img: manic,
         title: "Classic Manicure",
         desc: "A timeless treatment that keeps your hands soft and nails beautifully polished.",
       },
       {
-        img: f3,
+        img: manicu,
         title: "Gel Manicure",
         desc: "Enjoy chip-free shine with our long-lasting gel finish and expert touch.",
       },
     ],
     Pedicure: [
       {
-        img: "https://images.unsplash.com/photo-1599058917212-d750089bc07f",
+        img: pedi,
         title: "Spa Pedicure",
         desc: "Relax and rejuvenate your feet with an exfoliating soak and massage treatment.",
       },
       {
-        img: "https://images.unsplash.com/photo-1602167686690-7fcb30efc0c5",
+        img: pedic,
         title: "Deluxe Pedicure",
         desc: "A deep foot care experience that restores hydration and leaves you feeling refreshed.",
       },
       {
-        img: "https://images.unsplash.com/photo-1595941069919-fbaedaa7f2f4",
+        img: pedicu,
         title: "Express Pedicure",
         desc: "Perfect for those on the go — quick, clean, and polished to perfection.",
       },
     ],
-    "Nail Enchancements": [
+    "Nail Enhancements": [
       {
-        img: "https://images.unsplash.com/photo-1612104124444-8f8e5f8f8d60",
+        img: ench,
         title: "Acrylic Extensions",
         desc: "Get long-lasting nail extensions designed to your ideal shape and style.",
       },
       {
-        img: "https://images.unsplash.com/photo-1584622650111-f1d6bca9b11d",
+        img: encha,
         title: "Gel Extensions",
         desc: "Flexible, natural-looking gel enhancements with a durable, glossy finish.",
       },
       {
-        img: "https://images.unsplash.com/photo-1621522434169-b232f0cfc7eb",
+        img: enchan,
         title: "Overlay Treatment",
         desc: "Strengthen your natural nails with a smooth, elegant overlay.",
       },
     ],
     "Nail Arts": [
       {
-        img: "https://images.unsplash.com/photo-1612104124593-2c9331c9d6f8",
+        img: "https://images.unsplash.com/photo-1612104124593-2c9331c9d6f8?auto=format&fit=crop&w=600&q=60",
         title: "Custom Nail Art",
         desc: "Express your creativity with our stunning custom designs and hand-painted details.",
       },
       {
-        img: "https://images.unsplash.com/photo-1602167686690-7fcb30efc0c5",
+        img: "https://images.unsplash.com/photo-1602167686690-7fcb30efc0c5?auto=format&fit=crop&w=600&q=60",
         title: "Minimalist Design",
         desc: "Clean, simple lines and elegant colors for a modern nail look.",
       },
       {
-        img: "https://images.unsplash.com/photo-1599058917212-d750089bc07f",
+        img: "https://images.unsplash.com/photo-1599058917212-d750089bc07f?auto=format&fit=crop&w=600&q=60",
         title: "3D Nail Art",
         desc: "Add sparkle and texture with bold, eye-catching 3D designs.",
       },
     ],
   };
 
+  // Base animation variants
+  const fadeUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] },
+    },
+  };
+
   return (
-    <div className="px-4 sm:px-8 md:px-12 lg:px-24 xl:px-56 mt-8">
+    <div className="px-4 sm:px-8 md:px-12 lg:px-24 xl:px-56 mt-8 overflow-hidden">
       {/* HERO SECTION */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -89,28 +105,32 @@ const Service = () => {
         transition={{ duration: 1 }}
         className="relative"
       >
-        <img
-          className="w-full h-76 sm:h-64 md:h-80 lg:h-96 object-cover rounded-xl"
+        <motion.img
           src={heroimg}
           alt="hero"
+          initial={{ scale: 1.15 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 2, ease: "easeOut" }}
+          className="w-full h-76 sm:h-64 md:h-80 lg:h-96 object-cover rounded-xl"
         />
+
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 1 }}
-          className="absolute inset-0 bg-black/50 rounded-xl"
+          animate={{ opacity: 0.6 }}
+          transition={{ delay: 0.4, duration: 1 }}
+          className="absolute inset-0 bg-black rounded-xl"
         ></motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 1 }}
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
           className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
         >
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-3">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-3 tracking-wide">
             Explore Our Services
           </h1>
-          <p className="text-white text-sm sm:text-base max-w-xl">
+          <p className="text-white text-sm sm:text-base max-w-xl leading-relaxed">
             Pamper Yourself With Our Signature Nail Treatments
           </p>
         </motion.div>
@@ -118,17 +138,20 @@ const Service = () => {
 
       {/* NAVIGATION */}
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="mt-10"
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="mt-12"
       >
         <ul className="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm sm:text-base font-medium">
           {Object.keys(serviceData).map((service) => (
             <motion.li
               key={service}
               whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => setActiveService(service)}
+              transition={{ type: "spring", stiffness: 250 }}
               className={`cursor-pointer flex flex-col items-center gap-1 transition-all duration-300 ${
                 activeService === service
                   ? "text-pink-600"
@@ -147,50 +170,56 @@ const Service = () => {
         </ul>
       </motion.div>
 
-      {/* CARD SECTION */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        transition={{ staggerChildren: 0.2 }}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10"
-      >
-        {serviceData[activeService].map((item, index) => (
-          <motion.div
-            key={index}
-            variants={{
-              hidden: { opacity: 0, y: 50 },
-              visible: { opacity: 1, y: 0 },
-            }}
-            transition={{ duration: 0.6 }}
-            whileHover={{ scale: 1.05 }}
-            className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-500"
-          >
-            <motion.img
-              src={item.img}
-              alt={item.title}
-              className="w-full h-48 sm:h-56 md:h-60 object-cover"
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.4 }}
-            />
-            <div className="p-5 text-center">
-              <h3 className="text-lg font-semibold text-gray-800 mb-1">
-                {item.title}
-              </h3>
-              <p className="text-gray-500 text-sm leading-relaxed">
-                {item.desc}
-              </p>
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
+      {/* ✅ FIXED CARD SECTION */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeService}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -40 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12"
+        >
+          {serviceData[activeService].map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
+              whileHover={{
+                scale: 1.04,
+                boxShadow: "0 15px 25px rgba(0,0,0,0.1)",
+              }}
+              className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-500"
+            >
+              <motion.img
+                src={item.img}
+                alt={item.title}
+                className="w-full h-48 sm:h-56 md:h-60 object-cover"
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.5 }}
+                loading="lazy"
+              />
+              <div className="p-5 text-center">
+                <h3 className="text-lg font-semibold text-gray-800 mb-1">
+                  {item.title}
+                </h3>
+                <p className="text-gray-500 text-sm leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </AnimatePresence>
 
       {/* TESTIMONIAL SECTION */}
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="pt-18 pb-5"
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="pt-20 pb-10"
       >
         <p className="text-center text-lg sm:text-xl font-semibold mb-10">
           What Our Clients Say
@@ -215,7 +244,11 @@ const Service = () => {
           ].map((review, i) => (
             <motion.div
               key={i}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 15px 25px rgba(0,0,0,0.1)",
+              }}
+              transition={{ type: "spring", stiffness: 250 }}
               className="bg-white shadow-lg rounded-xl p-5 flex-1 transition-all duration-300"
             >
               <div className="flex items-center mb-3">

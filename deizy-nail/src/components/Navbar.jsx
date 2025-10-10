@@ -16,16 +16,16 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      initial={{ y: -60, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="flex justify-between items-center h-16 px-6 md:px-20 lg:px-56 shadow-md bg-white relative z-50"
+      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="flex justify-between items-center h-16 px-6 md:px-20 lg:px-56 shadow-md bg-white relative z-50 will-change-transform will-change-opacity"
     >
       {/* Logo */}
       <motion.h1
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
         className="text-2xl md:text-3xl lg:text-4xl font-bold text-pink-600"
       >
         Deizy Glitz
@@ -36,8 +36,8 @@ const Navbar = () => {
         {navLinks.map((link, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ delay: 0.2 + index * 0.1, duration: 0.4 }}
           >
             <NavLink
@@ -50,7 +50,6 @@ const Navbar = () => {
             >
               <span>{link.label}</span>
               <motion.div
-                layoutId="underline"
                 className="h-[2px] w-0 bg-pink-500 transition-all duration-300"
                 whileHover={{ width: "50%" }}
               />
@@ -75,21 +74,21 @@ const Navbar = () => {
         {menuOpen ? <FaTimes /> : <FaBars />}
       </motion.button>
 
-      {/* Mobile Menu (Animated) */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             key="mobileMenu"
-            initial={{ y: -30, opacity: 0 }}
+            initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -20, opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
+            exit={{ y: -10, opacity: 0 }}
+            transition={{ duration: 0.3 }}
             className="absolute top-16 left-0 w-full bg-white shadow-lg flex flex-col items-center py-6 gap-6 md:hidden z-40"
           >
             {navLinks.map((link, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
               >
