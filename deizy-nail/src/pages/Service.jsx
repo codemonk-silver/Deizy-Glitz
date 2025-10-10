@@ -1,5 +1,4 @@
-import React, { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useMemo, memo } from "react";
 import { FaStar } from "react-icons/fa";
 import heroimg from "../assets/heroimg.png";
 import mani from "../assets/mani.jpg";
@@ -11,30 +10,65 @@ import pedicu from "../assets/pedicu.jpeg";
 import ench from "../assets/ench.jpg";
 import encha from "../assets/encha.jpg";
 import enchan from "../assets/enchan.jpg";
-import ta from '../assets/ta.jpg';
-import tb from '../assets/tb.jpg';
-import tc from '../assets/tc.jpg';
+import ta from "../assets/ta.jpg";
+import tb from "../assets/tb.jpg";
+import tc from "../assets/tc.jpg";
 
-const Service = React.memo(() => {
+const Service = memo(() => {
   const [activeService, setActiveService] = useState("Manicure");
 
-  // ✅ Memoize data to prevent recreation
   const serviceData = useMemo(
     () => ({
       Manicure: [
-        { img: mani, title: "Luxury Manicure", desc: "Experience our soothing hand care treatment with nourishing oils and flawless polish." },
-        { img: manic, title: "Classic Manicure", desc: "A timeless treatment that keeps your hands soft and nails beautifully polished." },
-        { img: manicu, title: "Gel Manicure", desc: "Enjoy chip-free shine with our long-lasting gel finish and expert touch." },
+        {
+          img: mani,
+          title: "Luxury Manicure",
+          desc: "Experience our soothing hand care treatment with nourishing oils and flawless polish.",
+        },
+        {
+          img: manic,
+          title: "Classic Manicure",
+          desc: "A timeless treatment that keeps your hands soft and nails beautifully polished.",
+        },
+        {
+          img: manicu,
+          title: "Gel Manicure",
+          desc: "Enjoy chip-free shine with our long-lasting gel finish and expert touch.",
+        },
       ],
       Pedicure: [
-        { img: pedi, title: "Spa Pedicure", desc: "Relax and rejuvenate your feet with an exfoliating soak and massage treatment." },
-        { img: pedic, title: "Deluxe Pedicure", desc: "A deep foot care experience that restores hydration and leaves you feeling refreshed." },
-        { img: pedicu, title: "Express Pedicure", desc: "Perfect for those on the go — quick, clean, and polished to perfection." },
+        {
+          img: pedi,
+          title: "Spa Pedicure",
+          desc: "Relax and rejuvenate your feet with an exfoliating soak and massage treatment.",
+        },
+        {
+          img: pedic,
+          title: "Deluxe Pedicure",
+          desc: "A deep foot care experience that restores hydration and leaves you feeling refreshed.",
+        },
+        {
+          img: pedicu,
+          title: "Express Pedicure",
+          desc: "Perfect for those on the go — quick, clean, and polished to perfection.",
+        },
       ],
       "Nail Enhancements": [
-        { img: ench, title: "Acrylic Extensions", desc: "Get long-lasting nail extensions designed to your ideal shape and style." },
-        { img: encha, title: "Gel Extensions", desc: "Flexible, natural-looking gel enhancements with a durable, glossy finish." },
-        { img: enchan, title: "Overlay Treatment", desc: "Strengthen your natural nails with a smooth, elegant overlay." },
+        {
+          img: ench,
+          title: "Acrylic Extensions",
+          desc: "Get long-lasting nail extensions designed to your ideal shape and style.",
+        },
+        {
+          img: encha,
+          title: "Gel Extensions",
+          desc: "Flexible, natural-looking gel enhancements with a durable, glossy finish.",
+        },
+        {
+          img: enchan,
+          title: "Overlay Treatment",
+          desc: "Strengthen your natural nails with a smooth, elegant overlay.",
+        },
       ],
       "Nail Arts": [
         {
@@ -57,142 +91,85 @@ const Service = React.memo(() => {
     []
   );
 
-  const smoothSpring = { type: "spring", stiffness: 80, damping: 18, mass: 1 };
-
-  const fadeUp = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: smoothSpring },
-  };
-
   return (
-    <div className="px-4 sm:px-8 md:px-12 lg:px-24 xl:px-56 mt-8 overflow-hidden">
+    <div className="px-4 sm:px-8 md:px-12 lg:px-24 xl:px-56 mt-8 overflow-hidden selection:bg-pink-200/40">
       {/* HERO SECTION */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-        className="relative"
-      >
-        <motion.img
+      <section className="relative w-full h-64 sm:h-72 md:h-80 lg:h-[28rem] overflow-hidden rounded-2xl">
+        <img
           src={heroimg}
-          alt="hero"
+          alt="Nail salon hero"
           loading="lazy"
-          initial={{ scale: 1.12 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 2, ease: [0.25, 0.1, 0.25, 1] }}
-          className="w-full h-76 sm:h-64 md:h-80 lg:h-96 object-cover rounded-xl will-change-transform"
+          decoding="async"
+          className="w-full h-full object-cover will-change-transform duration-500 ease-in-out scale-100 hover:scale-105 transition-transform"
         />
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.6 }}
-          transition={{ delay: 0.4, duration: 1 }}
-          className="absolute inset-0 bg-black rounded-xl"
-        />
-
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
-        >
-          <motion.h1
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-3 tracking-wide"
-          >
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white drop-shadow-lg animate-[fadeIn_1s_ease-out]">
             Explore Our Services
-          </motion.h1>
-          <motion.p className="text-white text-sm sm:text-base max-w-xl leading-relaxed">
+          </h1>
+          <p className="mt-3 text-white/90 text-sm sm:text-base max-w-xl leading-relaxed animate-[fadeIn_1.2s_ease-out]">
             Pamper Yourself With Our Signature Nail Treatments
-          </motion.p>
-        </motion.div>
-      </motion.div>
+          </p>
+        </div>
+      </section>
 
       {/* NAVIGATION */}
-      <motion.ul
-        variants={fadeUp}
-        initial="hidden"
-        animate="visible"
-        className="mt-12 flex flex-wrap justify-center gap-4 sm:gap-6 text-sm sm:text-base font-medium"
-      >
+      <nav className="mt-12 flex flex-wrap justify-center gap-4 sm:gap-6 text-sm sm:text-base font-medium animate-[fadeIn_1s_ease-out_0.3s_both]">
         {Object.keys(serviceData).map((service) => (
-          <motion.li
+          <button
             key={service}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.97 }}
-            transition={smoothSpring}
             onClick={() => setActiveService(service)}
-            className={`cursor-pointer flex flex-col items-center gap-1 transition-colors duration-300 ${
+            className={`relative px-2 py-1 transition-all duration-300 ${
               activeService === service
-                ? "text-pink-600"
+                ? "text-pink-600 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-3/4 after:h-[2px] after:bg-pink-500 after:rounded-full after:animate-[scaleIn_0.3s_ease-out]"
                 : "text-gray-500 hover:text-pink-400"
             }`}
           >
-            <p>{service}</p>
-            {activeService === service && (
-              <motion.div
-                layoutId="underline"
-                className="w-3/4 h-[2px] bg-pink-500 rounded-full"
-              />
-            )}
-          </motion.li>
+            {service}
+          </button>
         ))}
-      </motion.ul>
+      </nav>
 
       {/* SERVICE CARDS */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeService}
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -40 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12"
-        >
-          {serviceData[activeService].map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ ...smoothSpring, delay: index * 0.1 }}
-              whileHover={{
-                scale: 1.04,
-                boxShadow: "0 15px 25px rgba(0,0,0,0.1)",
-              }}
-              className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-500 will-change-transform"
-            >
-              <motion.img
+      <section
+        key={activeService}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12"
+      >
+        {serviceData[activeService].map((item, i) => (
+          <article
+            key={i}
+            className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-500 will-change-transform animate-[slideUp_0.6s_ease-out_both]"
+            style={{ animationDelay: `${i * 0.08}s` }}
+          >
+            <div className="relative h-48 sm:h-56 md:h-60 overflow-hidden bg-gray-100">
+              <img
                 src={item.img}
                 alt={item.title}
                 loading="lazy"
-                className="w-full h-48 sm:h-56 md:h-60 object-cover will-change-transform"
-                whileHover={{ scale: 1.1 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                decoding="async"
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
               />
-              <div className="p-5 text-center">
-                <h3 className="text-lg font-semibold text-gray-800 mb-1">
-                  {item.title}
-                </h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </AnimatePresence>
+            </div>
+            <div className="p-5 text-center">
+              <h3 className="text-lg font-semibold text-gray-800 mb-1">
+                {item.title}
+              </h3>
+              <p className="text-gray-500 text-sm leading-relaxed">
+                {item.desc}
+              </p>
+            </div>
+          </article>
+        ))}
+      </section>
 
-      {/* TESTIMONIAL SECTION */}
-      <motion.div
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        className="pt-20 pb-10"
-      >
-        <p className="text-center text-lg sm:text-xl font-semibold mb-10">
+      {/* TESTIMONIALS */}
+      <section className="pt-20 pb-10 animate-[fadeIn_1s_ease-out_0.2s_both]">
+        <h2 className="text-center text-lg sm:text-xl font-semibold mb-10">
           What Our Clients Say
-        </p>
+        </h2>
 
         <div className="flex flex-col sm:flex-row justify-between gap-6">
-          {[ 
+          {[
             {
               name: "Sarah Johnson",
               date: "September 25, 2025",
@@ -208,20 +185,14 @@ const Service = React.memo(() => {
               stars: 4,
             },
           ].map((review, i) => (
-            <motion.div
+            <div
               key={i}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 15px 25px rgba(0,0,0,0.1)",
-              }}
-              transition={smoothSpring}
-              className="bg-white shadow-lg rounded-xl p-5 flex-1 transition-all duration-300 will-change-transform"
+              className="bg-white shadow-md rounded-2xl p-5 flex-1 hover:shadow-xl hover:-translate-y-1 transition-all duration-500 will-change-transform"
             >
               <div className="flex items-center mb-3">
                 <img
                   src={review.img}
                   alt={review.name}
-                  loading="lazy"
                   className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover mr-4"
                 />
                 <div>
@@ -234,7 +205,9 @@ const Service = React.memo(() => {
                 {[...Array(5)].map((_, j) => (
                   <FaStar
                     key={j}
-                    className={j < review.stars ? "text-yellow-400" : "text-gray-300"}
+                    className={`${
+                      j < review.stars ? "text-yellow-400" : "text-gray-300"
+                    }`}
                   />
                 ))}
               </div>
@@ -242,10 +215,26 @@ const Service = React.memo(() => {
               <p className="text-gray-500 text-sm leading-relaxed">
                 "{review.text}"
               </p>
-            </motion.div>
+            </div>
           ))}
         </div>
-      </motion.div>
+      </section>
+
+      {/* Modern animations using Tailwind keyframes */}
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+          from { opacity: 0; transform: translateY(40px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes scaleIn {
+          from { transform: scaleX(0); }
+          to { transform: scaleX(1); }
+        }
+      `}</style>
     </div>
   );
 });
