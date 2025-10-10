@@ -61,7 +61,7 @@ const About = () => {
         className="relative mb-12"
       >
         <img
-          className="w-full h-56 sm:h-72 md:h-80 lg:h-96 object-cover rounded-xl"
+          className="w-full h-76 sm:h-72 md:h-80 lg:h-96 object-cover rounded-xl"
           src={heroimg}
           alt="hero"
         />
@@ -93,7 +93,7 @@ const About = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="py-8"
+        className="lg:py-8 pt-1"
       >
         <p className="text-lg sm:text-xl font-bold mb-3 text-center sm:text-left">
           Our Story

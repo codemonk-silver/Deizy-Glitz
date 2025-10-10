@@ -63,7 +63,7 @@ const Hero = () => {
   const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   return (
-    <div className="px-6 md:px-12 lg:px-56 mt-4 overflow-hidden">
+    <div className="px-4 md:px-12 lg:px-56 mt-4 overflow-hidden">
       {/* Hero Section */}
       <div className="relative w-full mt-4 rounded-xl overflow-hidden">
         {/* Background Image */}
@@ -73,7 +73,7 @@ const Hero = () => {
           transition={{ duration: 0.6 }}
           src={heroimg}
           alt="heroimg"
-          className="w-full h-[18rem] sm:h-[20rem] lg:h-[24rem] object-cover"
+          className="w-full h-76 sm:h-[20rem] lg:h-[24rem] object-cover"
           loading="lazy"
         />
 
