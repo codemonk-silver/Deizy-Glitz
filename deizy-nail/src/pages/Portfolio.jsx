@@ -15,6 +15,18 @@ import f3 from "../assets/f3.jpg";
 import ta from "../assets/ta.jpg";
 import tb from "../assets/tb.jpg";
 import tc from "../assets/tc.jpg";
+import ench from '../assets/ench.jpg';
+import mani from '../assets/mani.jpg';
+import encha from '../assets/encha.jpg';
+import enchan from '../assets/enchan.jpg';
+import manic from '../assets/manic.jpg';
+import manicu from '../assets/manicu.jpg';
+import pedi from '../assets/pedi.jpg';
+import pedic from '../assets/pedic.jpg';
+import pedicu from '../assets/pedicu.jpeg';
+import hom from '../assets/hom.jpg';
+import homm from '../assets/homm.jpg';
+import hoom from '../assets/hoom.jpg';
 
 const Portfolio = () => {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -37,10 +49,10 @@ const Portfolio = () => {
 
   const gallery = {
     Gel: [f1, f2, f3, ta, tb],
-    Acrylic: [f2, f3, ta, tb, tc],
-    "Nail Art": [f1, f2, tb, tc, ta],
-    Manicure: [tb, ta, f3, f1, f2],
-    Pedicure: [tc, tb, f1, f2, f3],
+    Acrylic: [hom, homm, hoom, tb, tc],
+    "Nail Art": [ench, encha, enchan],
+    Manicure: [mani, manic, manicu],
+    Pedicure: [pedi, pedic, pedicu],
   };
 
   const allImages = Object.keys(gallery).flatMap((key) =>

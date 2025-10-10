@@ -11,6 +11,9 @@ import pedicu from "../assets/pedicu.jpeg";
 import ench from "../assets/ench.jpg";
 import encha from "../assets/encha.jpg";
 import enchan from "../assets/enchan.jpg";
+import ta from '../assets/ta.jpg';
+import tb from '../assets/tb.jpg';
+import tc from '../assets/tc.jpg';
 
 const Service = React.memo(() => {
   const [activeService, setActiveService] = useState("Manicure");
@@ -35,17 +38,17 @@ const Service = React.memo(() => {
       ],
       "Nail Arts": [
         {
-          img: "https://images.unsplash.com/photo-1612104124593-2c9331c9d6f8?auto=format&fit=crop&w=600&q=60",
+          img: ta,
           title: "Custom Nail Art",
           desc: "Express your creativity with our stunning custom designs and hand-painted details.",
         },
         {
-          img: "https://images.unsplash.com/photo-1602167686690-7fcb30efc0c5?auto=format&fit=crop&w=600&q=60",
+          img: tc,
           title: "Minimalist Design",
           desc: "Clean, simple lines and elegant colors for a modern nail look.",
         },
         {
-          img: "https://images.unsplash.com/photo-1599058917212-d750089bc07f?auto=format&fit=crop&w=600&q=60",
+          img: tb,
           title: "3D Nail Art",
           desc: "Add sparkle and texture with bold, eye-catching 3D designs.",
         },

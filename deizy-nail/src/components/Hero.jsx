@@ -54,18 +54,19 @@ const Hero = () => {
     },
   };
 
-  // Card appearance
+  // Card slide-in animation
   const cardVariant = {
-    hidden: { opacity: 0, y: 40, scale: 0.96 },
+    hidden: (i) => ({
+      opacity: 0,
+      x: i % 2 === 0 ? -100 : 100,
+    }),
     visible: (i) => ({
       opacity: 1,
-      y: 0,
-      scale: 1,
+      x: 0,
       transition: {
-        delay: i * 0.15 + 0.2,
-        type: "spring",
-        stiffness: 100,
-        damping: 15,
+        delay: i * 0.1,
+        duration: 0.5,
+        ease: "easeOut",
       },
     }),
   };

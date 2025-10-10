@@ -2,16 +2,14 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
-// 🔧 Optimized animation settings
-const fadeUp = {
-  hidden: { opacity: 0, y: 50, filter: "blur(6px)" },
+// 🔧 Optimized animation settings - fade only, faster
+const fadeIn = {
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
     transition: {
-      duration: 1.2,
-      ease: [0.22, 1, 0.36, 1], // Smooth "easeOutQuart"
+      duration: 0.6,
+      ease: "easeOut",
     },
   },
 };
@@ -21,10 +19,9 @@ const Contact = () => {
     <div className="px-4 sm:px-8 lg:px-32 xl:px-56 py-20 bg-white text-gray-800 overflow-hidden will-change-transform">
       {/* Title */}
       <motion.h2
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.4 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
         className="text-3xl sm:text-4xl font-bold text-center mb-14 tracking-tight"
       >
         Get In Touch
@@ -33,25 +30,19 @@ const Contact = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
         {/* Left Side */}
         <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ delay: 0.15 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
           className="flex flex-col justify-center space-y-6"
         >
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-              transition: { duration: 1, ease: "easeOut" },
-            }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="text-base sm:text-lg text-gray-600 leading-relaxed"
           >
             We'd love to hear from you! Whether you want to book an appointment,
-            ask a question, or just say hi — reach out and we’ll respond soon.
+            ask a question, or just say hi — reach out and we'll respond soon.
           </motion.p>
 
           {/* Contact Info Items */}
@@ -71,17 +62,9 @@ const Contact = () => {
           ].map((item, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{
-                opacity: 1,
-                x: 0,
-                transition: {
-                  delay: 0.2 + index * 0.15,
-                  duration: 0.9,
-                  ease: [0.22, 1, 0.36, 1],
-                },
-              }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 + index * 0.1, duration: 0.6 }}
               className="flex items-center gap-3 hover:translate-x-2 transition-transform duration-500"
             >
               {item.icon}
@@ -94,27 +77,17 @@ const Contact = () => {
 
         {/* Right Side (Form) */}
         <motion.form
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ delay: 0.3 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
           className="bg-pink-50 p-6 sm:p-8 rounded-2xl shadow-md space-y-5 hover:shadow-xl transition-all duration-700 will-change-transform"
         >
           {["Your Name", "Email Address"].map((label, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-                transition: {
-                  delay: 0.2 + i * 0.15,
-                  duration: 0.9,
-                  ease: [0.25, 0.1, 0.25, 1],
-                },
-              }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 + i * 0.1, duration: 0.6 }}
             >
               <label className="block text-sm font-semibold text-gray-700 mb-1">
                 {label}
@@ -129,13 +102,9 @@ const Contact = () => {
 
           {/* Message Field */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-              transition: { delay: 0.5, duration: 0.9, ease: "easeOut" },
-            }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
           >
             <label className="block text-sm font-semibold text-gray-700 mb-1">
               Message
