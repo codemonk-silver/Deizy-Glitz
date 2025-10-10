@@ -108,8 +108,7 @@ const Service = React.memo(() => {
       <motion.ul
         variants={fadeUp}
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
+        animate="visible"
         className="mt-12 flex flex-wrap justify-center gap-4 sm:gap-6 text-sm sm:text-base font-medium"
       >
         {Object.keys(serviceData).map((service) => (

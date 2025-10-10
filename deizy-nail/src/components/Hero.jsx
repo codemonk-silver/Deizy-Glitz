@@ -71,7 +71,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="px-6 md:px-12 lg:px-56 overflow-hidden transform-gpu">
+    <div className="px-6 md:px-12 lg:px-56 mt-4 overflow-hidden transform-gpu">
       {/* 🔹 Hero Section */}
       <div className="relative w-full mt-4 rounded-xl overflow-hidden will-change-transform">
         {/* Background Image with smooth zoom-out */}
