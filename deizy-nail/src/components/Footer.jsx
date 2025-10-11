@@ -67,7 +67,7 @@ const Footer = () => {
             <div className="flex gap-4 mt-2">
               <motion.a
                 whileHover={{ scale: 1.2, rotate: 5 }}
-                href="https://instagram.com"
+                href="https://instagram.com/deizy_glitz"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -78,7 +78,7 @@ const Footer = () => {
               </motion.a>
               <motion.a
                 whileHover={{ scale: 1.2, rotate: -5 }}
-                href="https://wa.me/1234567890"
+                href="https://wa.me/2347087095727"
                 target="_blank"
                 rel="noopener noreferrer"
               >

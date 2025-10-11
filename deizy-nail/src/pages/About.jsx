@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { FaHandHoldingHeart, FaPalette, FaUserCheck } from "react-icons/fa6";
 import heroimg from "../assets/heroimg.png";
@@ -7,48 +7,71 @@ import ta from "../assets/ta.jpg";
 import tc from "../assets/tc.jpg";
 
 const About = () => {
-  const teamMembers = [
-    {
-      img: mypics,
-      name: "Modasola Elufisan",
-      job: "Lead Nail Artist",
-      desc: "With over 10 years of experience, Modasola specializes in creative nail designs and luxury hand treatments.",
-    },
-    {
-      img: ta,
-      name: "Amara Benson",
-      job: "Senior Nail Technician",
-      desc: "Amara’s precision and gentle care make her a favorite for both manicure and pedicure services.",
-    },
-    {
-      img: tc,
-      name: "Tosin Adeyemi",
-      job: "Nail Art Specialist",
-      desc: "Tosin brings your nail ideas to life with stunning art, color, and custom design techniques.",
-    },
-  ];
+  const [imageLoaded, setImageLoaded] = useState({});
 
-  const commitmentCards = [
-    {
-      icon: <FaHandHoldingHeart size={40} className="text-pink-600" />,
-      title: "Hygiene and Safety",
-      desc: "We uphold the highest standards of cleanliness, sterilization, and client safety in every service.",
-    },
-    {
-      icon: <FaPalette size={40} className="text-pink-600" />,
-      title: "Creativity and Artistry",
-      desc: "Our team blends modern trends with artistic precision to craft unique nail designs that inspire confidence.",
-    },
-    {
-      icon: <FaUserCheck size={40} className="text-pink-600" />,
-      title: "Client Focused",
-      desc: "Your comfort and satisfaction are at the heart of everything we do — every visit is a personalized experience.",
-    },
-  ];
+  const teamMembers = useMemo(
+    () => [
+      {
+        img: mypics,
+        name: "Modasola Elufisan",
+        job: "Lead Nail Artist",
+        desc: "With over 10 years of experience, Modasola specializes in creative nail designs and luxury hand treatments.",
+      },
+      {
+        img: ta,
+        name: "Amara Benson",
+        job: "Senior Nail Technician",
+        desc: "Amara's precision and gentle care make her a favorite for both manicure and pedicure services.",
+      },
+      {
+        img: tc,
+        name: "Tosin Adeyemi",
+        job: "Nail Art Specialist",
+        desc: "Tosin brings your nail ideas to life with stunning art, color, and custom design techniques.",
+      },
+    ],
+    []
+  );
+
+  const commitmentCards = useMemo(
+    () => [
+      {
+        icon: <FaHandHoldingHeart size={40} className="text-pink-600" />,
+        title: "Hygiene and Safety",
+        desc: "We uphold the highest standards of cleanliness, sterilization, and client safety in every service.",
+      },
+      {
+        icon: <FaPalette size={40} className="text-pink-600" />,
+        title: "Creativity and Artistry",
+        desc: "Our team blends modern trends with artistic precision to craft unique nail designs that inspire confidence.",
+      },
+      {
+        icon: <FaUserCheck size={40} className="text-pink-600" />,
+        title: "Client Focused",
+        desc: "Your comfort and satisfaction are at the heart of everything we do — every visit is a personalized experience.",
+      },
+    ],
+    []
+  );
 
   const fadeUp = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { duration: 0.5, ease: "easeOut" } 
+    },
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.1,
+      },
+    },
   };
 
   return (
@@ -57,29 +80,33 @@ const About = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
+        transition={{ duration: 0.6 }}
         className="relative mb-12"
       >
-        <img
-          className="w-full h-76 sm:h-72 md:h-80 lg:h-96 object-cover rounded-xl"
-          src={heroimg}
-          alt="hero"
-        />
-        <div className="absolute inset-0 bg-black/50 rounded-xl"></div>
+        <div className="relative w-full h-76 sm:h-72 md:h-80 lg:h-96 overflow-hidden rounded-xl bg-gray-200">
+          <img
+            className="w-full h-full object-cover rounded-xl"
+            src={heroimg}
+            alt="hero"
+            loading="eager"
+            decoding="async"
+          />
+          <div className="absolute inset-0 bg-black/50 rounded-xl"></div>
+        </div>
 
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 rounded-xl">
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 leading-tight"
           >
             Where Artistry Meets Your Fingertips
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
             className="text-white text-sm sm:text-base max-w-xl"
           >
             Pamper Yourself With Our Signature Nail Treatments
@@ -91,8 +118,7 @@ const About = () => {
       <motion.div
         variants={fadeUp}
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
+        animate="visible"
         className="lg:py-8 pt-1"
       >
         <p className="text-lg sm:text-xl font-bold mb-3 text-center sm:text-left">
@@ -120,6 +146,7 @@ const About = () => {
             src={heroimg}
             alt="Our Story"
             loading="lazy"
+            decoding="async"
           />
         </div>
       </motion.div>
@@ -129,34 +156,38 @@ const About = () => {
         variants={fadeUp}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
+        viewport={{ once: true, margin: "0px 0px -100px 0px" }}
         className="py-10"
       >
         <p className="text-lg sm:text-xl font-bold mb-10 text-center">
           Meet Our Talented Team
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "0px 0px -50px 0px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+        >
           {teamMembers.map((member, i) => (
             <motion.div
               key={i}
               variants={fadeUp}
-              transition={{ delay: i * 0.2 }}
-              className="bg-white shadow-lg rounded-xl flex flex-col items-center text-center p-5 sm:p-6 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500"
+              className="bg-white shadow-lg rounded-xl flex flex-col items-center text-center p-5 sm:p-6 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
             >
-              {/* ✅ Improved Image Quality */}
-              <motion.img
-                whileHover={{ scale: 1.08 }}
-                transition={{ duration: 0.4 }}
-                src={member.img}
-                alt={member.name}
-                loading="lazy"
-                srcSet={`
-                  ${member.img} 1x,
-                  ${member.img} 2x
-                `}
-                className="w-48 h-48 sm:w-52 sm:h-52 object-cover object-center rounded-full mb-4 ring-2 ring-pink-200 shadow-lg transition-transform duration-500 hover:scale-105"
-              />
+              <div className="relative w-48 h-48 sm:w-52 sm:h-52 mb-4 rounded-full ring-2 ring-pink-200 overflow-hidden bg-gray-200">
+                <img
+                  src={member.img}
+                  alt={member.name}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover object-center"
+                  onLoad={() =>
+                    setImageLoaded((prev) => ({ ...prev, [i]: true }))
+                  }
+                />
+              </div>
               <h3 className="text-base sm:text-lg font-semibold text-gray-800">
                 {member.name}
               </h3>
@@ -166,12 +197,16 @@ const About = () => {
               <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-4">
                 {member.desc}
               </p>
-              <button className="bg-pink-600 text-white text-xs sm:text-sm px-4 py-2 rounded-full hover:bg-pink-700 transition-all">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                className="bg-pink-600 text-white text-xs sm:text-sm px-4 py-2 rounded-full hover:bg-pink-700 transition-colors"
+              >
                 Book with {member.name.split(" ")[0]}
-              </button>
+              </motion.button>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </motion.div>
 
       {/* COMMITMENT SECTION */}
@@ -179,22 +214,35 @@ const About = () => {
         variants={fadeUp}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
+        viewport={{ once: true, margin: "0px 0px -100px 0px" }}
         className="pt-12"
       >
         <p className="text-lg sm:text-xl font-bold mb-10 text-center">
           Our Commitment to You
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "0px 0px -50px 0px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+        >
           {commitmentCards.map((card, i) => (
             <motion.div
               key={i}
               variants={fadeUp}
-              transition={{ delay: i * 0.2 }}
-              className="bg-white shadow-md rounded-xl p-5 sm:p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-2 transition-all duration-500"
+              className="bg-white shadow-md rounded-xl p-5 sm:p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
             >
-              <div className="mb-4">{card.icon}</div>
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4 }}
+                className="mb-4"
+              >
+                {card.icon}
+              </motion.div>
               <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2">
                 {card.title}
               </h3>
@@ -203,7 +251,7 @@ const About = () => {
               </p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </motion.div>
     </div>
   );
