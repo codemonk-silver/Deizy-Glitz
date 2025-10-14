@@ -1,9 +1,8 @@
-import React, { memo } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import heroimg from "../assets/heroimg.png";
 import { FaHandSparkles } from "react-icons/fa";
 import { GiFootprint } from "react-icons/gi";
 import { MdBrush } from "react-icons/md";
-import { motion } from "framer-motion";
 
 const services = [
   {
@@ -26,135 +25,129 @@ const services = [
   },
 ];
 
-// ✅ Memoized service card to prevent re-renders
+// ✅ Optimized fade (one observer reused)
+const FadeInSection = ({ children, index = 0 }) => {
+  const ref = useRef();
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    let observer = window._fadeObserver;
+    if (!observer) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("fade-show");
+              observer.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.1 }
+      );
+      window._fadeObserver = observer;
+    }
+    if (ref.current) observer.observe(ref.current);
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      style={{ transitionDelay: `${index * 0.1}s` }}
+      className="fade-hide will-change-transform"
+    >
+      {children}
+    </div>
+  );
+};
+
+// ✅ Tailwind utility for smooth fade-in (no JS transitions)
+const fadeClasses = `
+.fade-hide {opacity:0; transform:translateY(12px) scale(.98); transition:all .6s cubic-bezier(.25,1,.3,1);}
+.fade-show {opacity:1; transform:translateY(0) scale(1);}
+`;
+
+// ✅ Card
 const ServiceCard = memo(({ service, index }) => (
-  <motion.div
-    custom={index}
-    variants={{
-      hidden: { opacity: 0, y: 15 },
-      visible: {
-        opacity: 1,
-        y: 0,
-        transition: { delay: index * 0.08, duration: 0.4 },
-      },
-    }}
-    initial="hidden"
-    whileInView="visible"
-    viewport={{ once: true, amount: 0.2 }}
-    whileHover={{ y: -4 }}
-    className="border rounded-lg p-6 border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
-  >
-    <div className="mb-4 flex justify-center md:justify-start">{service.icon}</div>
-    <h3 className="text-lg md:text-xl font-bold mb-2 text-center md:text-left text-gray-800">
-      {service.title}
-    </h3>
-    <p className="text-gray-600 text-sm text-center md:text-left leading-relaxed">
-      {service.desc}
-    </p>
-  </motion.div>
+  <FadeInSection index={index}>
+    <div className="group relative border border-gray-200 rounded-2xl p-6 bg-white shadow-sm transition-all duration-400 hover:shadow-xl hover:-translate-y-2">
+      <div className="mb-4 flex justify-center sm:justify-start">
+        <div className="transition-transform duration-500 ease-out group-hover:scale-110 group-hover:rotate-3">
+          {service.icon}
+        </div>
+      </div>
+      <h3 className="text-lg sm:text-xl font-semibold mb-2 text-gray-800 transition-colors duration-300 group-hover:text-pink-600 text-center sm:text-left">
+        {service.title}
+      </h3>
+      <p className="text-gray-600 text-sm leading-relaxed text-center sm:text-left group-hover:text-gray-800 transition-colors duration-300">
+        {service.desc}
+      </p>
+    </div>
+  </FadeInSection>
 ));
 
 ServiceCard.displayName = "ServiceCard";
 
 const Hero = () => {
-  // ✅ Replace this with your WhatsApp number (no +, no spaces, no leading zeros)
-  const phoneNumber = "2347087095727"; 
+  const phoneNumber = "2347087095727";
   const message = "Hi, I’d like to book an appointment.";
-  const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+    message
+  )}`;
 
   return (
-    <div className="px-4 md:px-12 lg:px-56 mt-4 overflow-hidden">
-      {/* Hero Section */}
-      <div className="relative w-full mt-4 rounded-xl overflow-hidden">
-        {/* Background Image */}
-        <motion.img
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          src={heroimg}
-          alt="heroimg"
-          className="w-full h-76 sm:h-[20rem] lg:h-[24rem] object-cover"
-          loading="lazy"
-        />
+    <>
+      <style>{fadeClasses}</style>
+      <div className="px-4 sm:px-8 md:px-12 lg:px-56 mt-4 overflow-hidden selection:bg-pink-100/50">
+        {/* HERO */}
+        <div className="relative w-full mt-4 rounded-2xl overflow-hidden">
+          <img
+            src={heroimg}
+            alt="Hero"
+            loading="lazy"
+            decoding="async"
+            className="w-full h-[18rem] sm:h-[22rem] lg:h-[26rem] object-cover transform-gpu transition-transform duration-[1200ms] ease-out hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/60"></div>
 
-        {/* Dark overlay */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.5 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="absolute inset-0 bg-black"
-        />
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-3 sm:px-4">
+            <FadeInSection>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-wide drop-shadow-md transition-transform duration-500 transform-gpu">
+                Experience The Art Of Beautiful Nails
+              </h1>
+            </FadeInSection>
+            <FadeInSection index={0.1}>
+              <p className="text-white/90 max-w-md sm:max-w-2xl text-xs sm:text-sm md:text-base leading-relaxed mb-10">
+                Welcome to our nail studio where creativity and precision meet.
+                Let us pamper you with the finest nail care services.
+              </p>
+            </FadeInSection>
+            <FadeInSection index={0.2}>
+              <a
+                href={whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 sm:px-8 py-2 bg-pink-500 font-semibold text-white text-xs sm:text-sm md:text-base rounded-md mt-6 hover:bg-pink-600 hover:scale-105 active:scale-95 transition-transform duration-300 shadow-md hover:shadow-pink-300/50"
+              >
+                Book Appointment
+              </a>
+            </FadeInSection>
+          </div>
+        </div>
 
-        {/* Text Layer */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={{
-            visible: {
-              transition: { staggerChildren: 0.15, delayChildren: 0.2 },
-            },
-          }}
-          className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
-        >
-          <motion.h1
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0 },
-            }}
-            transition={{ duration: 0.5 }}
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-wide drop-shadow-lg"
-          >
-            Experience The Art Of Beautiful Nails
-          </motion.h1>
+        {/* SERVICES */}
+        <FadeInSection index={0.3}>
+          <p className="mt-12 text-lg sm:text-xl font-semibold text-center sm:text-left text-gray-800 tracking-wide">
+            Our Services
+          </p>
+        </FadeInSection>
 
-          <motion.p
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0 },
-            }}
-            transition={{ duration: 0.5 }}
-            className="text-white max-w-2xl text-sm md:text-base leading-relaxed drop-shadow-md"
-          >
-            Welcome to our nail studio where creativity and precision meet.
-            Let us pamper you with the finest nail care services.
-          </motion.p>
-
-          {/* ✅ WhatsApp Booking Button */}
-          <motion.a
-            href={whatsappLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0 },
-            }}
-            transition={{ duration: 0.5 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-            className="px-8 py-2 bg-pink-500 font-semibold text-white text-sm sm:text-base rounded-md mt-6 hover:bg-pink-600 transition-colors duration-200 cursor-pointer"
-          >
-            Book Appointment
-          </motion.a>
-        </motion.div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-8">
+          {services.map((service, index) => (
+            <ServiceCard key={service.id} service={service} index={index} />
+          ))}
+        </div>
       </div>
-
-      {/* Services Section */}
-      <motion.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.4 }}
-        viewport={{ once: true }}
-        className="mt-10 text-lg md:text-xl font-semibold text-center md:text-left"
-      >
-        Our Services
-      </motion.p>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-        {services.map((service, index) => (
-          <ServiceCard key={service.id} service={service} index={index} />
-        ))}
-      </div>
-    </div>
+    </>
   );
 };
 

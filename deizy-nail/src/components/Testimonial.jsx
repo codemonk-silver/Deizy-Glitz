@@ -1,25 +1,24 @@
 import React, { useEffect, useState, useMemo } from "react";
 import Slider from "react-slick";
-import { motion } from "framer-motion";
 import { FaStar, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-// 🔹 Custom Next Arrow
+// Custom Next Arrow
 const NextArrow = ({ onClick }) => (
   <button
     onClick={onClick}
-    className="absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow-lg z-10 hover:bg-gray-700 active:scale-95 transition-transform duration-200 will-change-transform"
+    className="absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow-lg z-10 hover:bg-gray-700 active:scale-95 transition-all duration-200"
   >
     <FaChevronRight />
   </button>
 );
 
-// 🔹 Custom Prev Arrow
+// Custom Prev Arrow
 const PrevArrow = ({ onClick }) => (
   <button
     onClick={onClick}
-    className="absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow-lg z-10 hover:bg-gray-700 active:scale-95 transition-transform duration-200 will-change-transform"
+    className="absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow-lg z-10 hover:bg-gray-700 active:scale-95 transition-all duration-200"
   >
     <FaChevronLeft />
   </button>
@@ -28,7 +27,7 @@ const PrevArrow = ({ onClick }) => (
 const Testimonial = () => {
   const [slidesToShow, setSlidesToShow] = useState(3);
 
-  // 🔹 Responsive slider setup
+  // Responsive setup
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 640) setSlidesToShow(1);
@@ -40,7 +39,6 @@ const Testimonial = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // 🔹 Static testimonial data memoized
   const testimonials = useMemo(
     () => [
       {
@@ -95,7 +93,6 @@ const Testimonial = () => {
     []
   );
 
-  // 🔹 Slider config optimized for smoothness
   const settings = {
     dots: window.innerWidth < 640,
     infinite: true,
@@ -115,57 +112,28 @@ const Testimonial = () => {
   return (
     <div className="relative px-6 md:px-12 lg:px-56 py-10 bg-gray-50 overflow-hidden">
       {/* Header Text */}
-      <motion.p
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          type: "spring",
-          stiffness: 80,
-          damping: 15,
-          duration: 0.5,
-        }}
-        className="text-2xl font-semibold text-center mb-6"
-      >
+      <p className="text-2xl font-semibold text-center mb-6 transition-opacity duration-700 opacity-100">
         What Our Clients Say
-      </motion.p>
+      </p>
 
       {/* Slider Section */}
       <Slider {...settings}>
-        {testimonials.map((item, index) => (
-          <div key={item.id} className="px-3 will-change-transform">
-            <motion.div
-              initial={{ opacity: 0, y: 40, scale: 0.96 }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                transition: {
-                  delay: index * 0.1,
-                  type: "spring",
-                  stiffness: 90,
-                  damping: 18,
-                },
-              }}
-              viewport={{ once: true }}
-              whileHover={{
-                scale: 1.03,
-                transition: { type: "spring", stiffness: 250 },
-              }}
-              className="bg-white shadow-md rounded-2xl p-6 h-56 flex flex-col justify-between transform-gpu"
+        {testimonials.map((item) => (
+          <div key={item.id} className="px-3">
+            <div
+              className="bg-white shadow-md rounded-2xl p-6 h-56 flex flex-col justify-between transform transition-transform duration-500 hover:scale-[1.03]"
             >
               {/* Profile Info */}
               <div className="flex items-center gap-3">
-                <motion.img
+                <img
                   src={item.image}
                   alt={item.name}
-                  className="w-14 h-14 rounded-full object-cover will-change-transform"
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ type: "spring", stiffness: 200 }}
+                  className="w-14 h-14 rounded-full object-cover transition-transform duration-300 hover:scale-110"
                 />
                 <div>
                   <h3 className="font-semibold">{item.name}</h3>
                   <div className="flex text-yellow-400 mb-1">
-                    {Array.from({ length: item.rating }, (_, i) => (
+                    {Array.from({ length: item.rating }).map((_, i) => (
                       <FaStar key={i} />
                     ))}
                   </div>
@@ -174,15 +142,10 @@ const Testimonial = () => {
               </div>
 
               {/* Testimonial Text */}
-              <motion.p
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 0.15, duration: 0.5 }}
-                className="text-gray-600 italic mt-4"
-              >
+              <p className="text-gray-600 italic mt-4 transition-opacity duration-700">
                 "{item.text}"
-              </motion.p>
-            </motion.div>
+              </p>
+            </div>
           </div>
         ))}
       </Slider>

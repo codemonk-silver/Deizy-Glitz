@@ -1,8 +1,48 @@
 @import "tailwindcss";
 
+html{
+  scroll-behavior: smooth;
+}
+
 a.active hr{
     display: block;
 }
+
+
+@keyframes navbarFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-navbarFadeIn {
+  animation: navbarFadeIn 0.4s ease-out forwards;
+}
+
+@keyframes navbarSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-navbarSlideDown {
+  animation: navbarSlideDown 0.3s ease-out forwards;
+}
+
+
+
+
+
+
+
 
 
 @keyframes fade-slide {
@@ -77,3 +117,5 @@ a.active hr{
 .animate-spin-slow {
   animation: spin-slow 2.5s linear infinite;
 }
+
+
