@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useRef, useState } from "react";
-import heroimg from "../assets/heroimg.png";
+import heroimg from "../assets/heroimg.jpeg";
 import { FaHandSparkles } from "react-icons/fa";
 import { GiFootprint } from "react-icons/gi";
 import { MdBrush } from "react-icons/md";

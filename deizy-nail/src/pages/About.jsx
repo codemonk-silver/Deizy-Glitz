@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { FaHandHoldingHeart, FaPalette, FaUserCheck } from "react-icons/fa6";
-import heroimg from "../assets/heroimg.png";
+import heroimg from "../assets/heroimg.jpeg";
 import mypics from "../assets/mypics.jpg";
 import ta from "../assets/ta.jpg";
 import tc from "../assets/tc.jpg";
