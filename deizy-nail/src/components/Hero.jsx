@@ -287,7 +287,7 @@ const Hero = () => {
       {/* Services */}
       <FadeInSection delay={600} direction="down">
         <div className="relative">
-          <p className="mt-12 text-lg sm:text-xl font-semibold text-center sm:text-left text-gray-800 tracking-wide bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
+          <p className="mt-12 text-lg sm:text-xl font-semibold text-center sm:text-left text-gray-800 tracking-wide bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text">
             Our Services
           </p>
           {/* Animated underline for section title */}
